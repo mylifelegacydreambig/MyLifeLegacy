@@ -1,0 +1,65 @@
+/* 
+  Localizable.strings
+  Fitform Admin
+
+  Created by Keyur on 23/03/20.
+  Copyright © 2020 Keyur. All rights reserved.
+*/
+
+//camera
+"take_photo" = "Take Photo";
+"gallry_photo" = "Choose Existing Photo";
+"cancel_button" = "Cancel";
+
+//Common
+"currency_aed" = "AED ";
+"just_now" = "Just Now";
+"second_sort" = "s";
+"minute_sort" = "m";
+"hour_sort" = "h";
+"day_sort" = "day";
+"days_sort" = "days";
+"week_sort" = "week";
+"weeks_sort" = "weeks";
+"month_sort" = "month";
+"months_sort" = "months";
+"year_sort" = "year";
+"years_sort" = "years";
+
+"second_word" = " Sec";
+"minute_word" = " Min";
+"hour_word" = " Hour";
+
+"AM" = " AM";
+"PM" = " PM";
+
+//Login
+"enter_email" = "Please enter email";
+"invalid_email" = "Invalid email";
+"enter_password" = "Please enter password";
+
+//Side menu
+"menu_home" = "Home";
+"menu_venue" = "Venues";
+"menu_event" = "Events";
+"menu_venue_booking" = "Venue Bookings";
+"menu_dashboard" = "Dashboard";
+"menu_reporting" = "Reporting";
+"menu_login" = "Login";
+"menu_setting" = "Setting";
+
+"menu_match_report" = "Match Report";
+"menu_stadium_report" = "Stadium Report";
+
+"logout" = "Logout";
+"logout_msg" = "Are you sure want to logout?";
+"yes" = "Yes";
+"no" = "No";
+
+//Time manager
+"select_start_time" = "Select Start Time";
+"select_end_time" = "Select End Time";
+
+//Stadium
+"ground_outdoor" = "Outdoor";
+"ground_indoor" = "Indoor";
