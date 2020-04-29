@@ -16,6 +16,21 @@ class VerificationVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //MARK:- Button click event
+    @IBAction func clickToBack(_ sender: Any) {
+        self.view.endEditing(true)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func clickToVerify(_ sender: Any) {
+        self.view.endEditing(true)
+        let vc : CreateProfileVC = STORYBOARD.MAIN.instantiateViewController(withIdentifier: "CreateProfileVC") as! CreateProfileVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func clickToResendCode(_ sender: Any) {
+        self.view.endEditing(true)
+    }
 
     /*
     // MARK: - Navigation

@@ -1,21 +1,118 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFProText-Regular.ttf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="CustomHomeTVC" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomHomeTVC" id="KGk-i7-Jjw" customClass="CustomHomeTVC" customModule="Memorie" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F0M-rT-6if" customClass="View" customModule="Memorie" customModuleProvider="target">
+                        <rect key="frame" x="20" y="5" width="280" height="70"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Legacy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6KL-Ka-Vei" customClass="Label" customModule="Memorie" customModuleProvider="target">
+                                <rect key="frame" x="15" y="17.5" width="196" height="21.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
+                                <color key="textColor" red="0.41176470588235292" green="0.40392156862745099" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textColorTypeAdapter">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontTypeAdapter" value="ar"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access all your memories here." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zog-fG-Ebq" customClass="Label" customModule="Memorie" customModuleProvider="target">
+                                <rect key="frame" x="15" y="39" width="196" height="15"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textColorTypeAdapter">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontTypeAdapter" value="ar"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ikS-8J-rDQ">
+                                <rect key="frame" x="216" y="19.5" width="51" height="31"/>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2d-8C-3Z5">
+                                <rect key="frame" x="234" y="14.5" width="31" height="41"/>
+                                <state key="normal" image="vault"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOY-3T-yLh">
+                                <rect key="frame" x="253" y="24" width="12" height="22"/>
+                                <state key="normal" image="right_arrow"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ikS-8J-rDQ" firstAttribute="leading" secondItem="Zog-fG-Ebq" secondAttribute="trailing" constant="5" id="5pz-bG-gEE"/>
+                            <constraint firstItem="6KL-Ka-Vei" firstAttribute="leading" secondItem="F0M-rT-6if" secondAttribute="leading" constant="15" id="JUf-h1-cK2"/>
+                            <constraint firstItem="ikS-8J-rDQ" firstAttribute="centerY" secondItem="F0M-rT-6if" secondAttribute="centerY" id="QSD-tU-yZj"/>
+                            <constraint firstItem="ikS-8J-rDQ" firstAttribute="leading" secondItem="6KL-Ka-Vei" secondAttribute="trailing" constant="5" id="R1O-PG-1YE"/>
+                            <constraint firstItem="Zog-fG-Ebq" firstAttribute="top" secondItem="6KL-Ka-Vei" secondAttribute="bottom" id="WIC-86-sov"/>
+                            <constraint firstAttribute="trailing" secondItem="ikS-8J-rDQ" secondAttribute="trailing" constant="15" id="moL-7N-Dnr"/>
+                            <constraint firstItem="Zog-fG-Ebq" firstAttribute="leading" secondItem="F0M-rT-6if" secondAttribute="leading" constant="15" id="o4W-Cf-Zva"/>
+                            <constraint firstItem="QOY-3T-yLh" firstAttribute="centerY" secondItem="F0M-rT-6if" secondAttribute="centerY" id="qtM-I7-9H0"/>
+                            <constraint firstAttribute="trailing" secondItem="QOY-3T-yLh" secondAttribute="trailing" constant="15" id="w9g-VM-9Zu"/>
+                            <constraint firstItem="N2d-8C-3Z5" firstAttribute="centerY" secondItem="F0M-rT-6if" secondAttribute="centerY" id="whm-qc-ND6"/>
+                            <constraint firstItem="6KL-Ka-Vei" firstAttribute="centerY" secondItem="F0M-rT-6if" secondAttribute="centerY" constant="-6.75" id="yUf-Xw-6oP"/>
+                            <constraint firstAttribute="trailing" secondItem="N2d-8C-3Z5" secondAttribute="trailing" constant="15" id="ynT-h8-dga"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="backgroundColorTypeAdapter">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="F0M-rT-6if" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="48V-em-ndi"/>
+                    <constraint firstItem="F0M-rT-6if" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Eai-jH-2Yd"/>
+                    <constraint firstAttribute="bottom" secondItem="F0M-rT-6if" secondAttribute="bottom" constant="5" id="KDg-Bs-yaR"/>
+                    <constraint firstAttribute="trailing" secondItem="F0M-rT-6if" secondAttribute="trailing" constant="20" id="k2K-XL-sIO"/>
+                </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="arrowBtn" destination="QOY-3T-yLh" id="faI-Br-Y3s"/>
+                <outlet property="mySwitch" destination="ikS-8J-rDQ" id="Ywe-Xb-LlU"/>
+                <outlet property="subTitleLbl" destination="Zog-fG-Ebq" id="D2e-N0-gZg"/>
+                <outlet property="titleLbl" destination="6KL-Ka-Vei" id="BAO-8X-Rxi"/>
+                <outlet property="vaultBtn" destination="N2d-8C-3Z5" id="rXY-O9-VVH"/>
+            </connections>
+            <point key="canvasLocation" x="133" y="154"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="right_arrow" width="12" height="21"/>
+        <image name="vault" width="31" height="40.5"/>
+    </resources>
 </document>

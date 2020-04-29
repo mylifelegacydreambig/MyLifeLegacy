@@ -60,35 +60,3 @@ func getAccessToken() -> String
     }
     return ""
 }
-
-//MARK: - Push notification Token
-func setLoginUserData()
-{
-    if AppModel.shared.currentUser != nil {
-        setDataToPreference(data: AppModel.shared.currentUser.dictionary() as AnyObject, forKey: "login_user_data")
-        setIsUserLogin(true)
-    }
-}
-
-func getLoginUserData() -> UserModel
-{
-    if let dict : [String : Any] = getDataFromPreference(key: "login_user_data") as? [String : Any]
-    {
-        return UserModel.init(dict: dict)
-    }
-    return UserModel.init(dict: [String : Any]())
-}
-
-func setIsUserLogin(_ value: Bool)
-{
-    setDataToPreference(data: value as AnyObject, forKey: "is_user_login")
-}
-
-func isUserLogin() -> Bool
-{
-    if let value : Bool = getDataFromPreference(key: "is_user_login") as? Bool
-    {
-        return value
-    }
-    return false
-}

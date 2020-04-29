@@ -9,9 +9,8 @@
 import UIKit
 import Toaster
 import AVFoundation
-import SKPhotoBrowser
-import SDWebImage
 import SafariServices
+import SDWebImage
 
 struct PLATFORM {
     static var isSimulator: Bool {
@@ -194,10 +193,10 @@ func displaySubViewtoParentView(_ parentview: UIView! , subview: UIView!)
 {
     subview.translatesAutoresizingMaskIntoConstraints = false
     parentview.addSubview(subview);
-    parentview.addConstraint(NSLayoutConstraint(item: subview, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0))
-    parentview.addConstraint(NSLayoutConstraint(item: subview, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1.0, constant: 0.0))
-    parentview.addConstraint(NSLayoutConstraint(item: subview, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1.0, constant: 0.0))
-    parentview.addConstraint(NSLayoutConstraint(item: subview, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: 0.0))
+    parentview.addConstraint(NSLayoutConstraint(item: subview!, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0))
+    parentview.addConstraint(NSLayoutConstraint(item: subview!, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1.0, constant: 0.0))
+    parentview.addConstraint(NSLayoutConstraint(item: subview!, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1.0, constant: 0.0))
+    parentview.addConstraint(NSLayoutConstraint(item: subview!, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: parentview, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: 0.0))
     parentview.layoutIfNeeded()
 }
 
@@ -366,19 +365,6 @@ func attributeStringStrikeThrough(_ mainString : String) -> NSAttributedString
     let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: mainString)
     attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
     return attributeString
-}
-
-func displayFullScreenImage(_ arrImg : [String], _ index : Int) {
-    var images = [SKPhoto]()
-    for temp in arrImg {
-        let photo = SKPhoto.photoWithImageURL(temp)
-        photo.shouldCachePhotoURLImage = true
-        images.append(photo)
-    }
-    // 2. create PhotoBrowser Instance, and present.
-    let browser = SKPhotoBrowser(photos: images)
-    browser.initializePageIndex(index)
-    UIApplication.topViewController()!.present(browser, animated: true, completion: {})
 }
 
 class L102Language {

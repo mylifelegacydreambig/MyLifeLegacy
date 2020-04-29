@@ -10,6 +10,23 @@ import UIKit
 
 class DeletePopupView: UIView {
 
+    override init(frame: CGRect) {
+       super.init(frame: frame)
+   }
+   
+   required init?(coder: NSCoder) {
+       super.init(coder: coder)
+   }
+   
+   @IBAction func clickToClose(_ sender: Any) {
+       self.removeFromSuperview()
+   }
+   
+   
+   @IBAction func clickToDelete(_ sender: Any) {
+       self.removeFromSuperview()
+   }
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

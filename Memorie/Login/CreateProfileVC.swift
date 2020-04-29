@@ -17,6 +17,16 @@ class CreateProfileVC: UIViewController {
     }
     
 
+    //MARK:- Button click event
+    @IBAction func clickToSubmit(_ sender: Any) {
+        self.view.endEditing(true)
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func clickToBack(_ sender: Any) {
+        self.view.endEditing(true)
+        self.navigationController?.popViewController(animated: true)
+    }
     /*
     // MARK: - Navigation
 

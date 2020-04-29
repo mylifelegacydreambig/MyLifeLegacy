@@ -10,11 +10,14 @@ import UIKit
 
 class CustomFriendTVC: UITableViewCell {
 
+    @IBOutlet weak var imgBtn: Button!
+    @IBOutlet weak var nameLbl: Label!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    @IBOutlet weak var statusLbl: Label!
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

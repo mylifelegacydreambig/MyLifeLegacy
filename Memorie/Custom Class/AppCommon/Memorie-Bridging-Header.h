@@ -1,15 +1,15 @@
 //
-//  FitformAdmin-Bridging-Header.h
-//  FitformAdmin
+//  Memorie-Bridging-Header.h
+//  Memorie
 //
-//  Created by iMac on 10/12/19.
-//  Copyright © 2019 iMac. All rights reserved.
+//  Created by Keyur on 16/04/20.
+//  Copyright © 2020 Keyur. All rights reserved.
 //
 
-#ifndef FitformAdmin_Bridging_Header_h
-#define FitformAdmin_Bridging_Header_h
+#ifndef Memorie_Bridging_Header_h
+#define Memorie_Bridging_Header_h
 
 #import "UIImage+ProportionalFill.h"
 
 
-#endif /* FitformAdmin_Bridging_Header_h */
+#endif /* Memorie_Bridging_Header_h */

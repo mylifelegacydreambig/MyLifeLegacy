@@ -10,6 +10,12 @@ import UIKit
 
 class CustomHomeTVC: UITableViewCell {
 
+    @IBOutlet weak var titleLbl: Label!
+    @IBOutlet weak var subTitleLbl: Label!
+    @IBOutlet weak var mySwitch: UISwitch!
+    @IBOutlet weak var vaultBtn: UIButton!
+    @IBOutlet weak var arrowBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

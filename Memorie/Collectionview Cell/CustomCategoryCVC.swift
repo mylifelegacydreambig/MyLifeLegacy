@@ -10,6 +10,8 @@ import UIKit
 
 class CustomCategoryCVC: UICollectionViewCell {
 
+    @IBOutlet weak var outerView: View!
+    @IBOutlet weak var titleLbl: Label!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

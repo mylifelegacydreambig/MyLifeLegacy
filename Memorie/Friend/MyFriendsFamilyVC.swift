@@ -30,6 +30,13 @@ class MyFriendsFamilyVC: UIViewController {
     @IBAction func clickToCloseOptionView(_ sender: Any) {
         optionView.removeFromSuperview()
     }
+    
+    @IBAction func clickToAddFriend(_ sender: Any) {
+        let vc : AddFriendsVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "AddFriendsVC") as! AddFriendsVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -81,6 +88,10 @@ extension MyFriendsFamilyVC : UITableViewDelegate, UITableViewDataSource {
             acceptRejectView.isHidden = true
             dismissView.isHidden = false
             displaySubViewtoParentView(self.view, subview: optionView)
+        }
+        else {
+            let vc : FriendProfileVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "FriendProfileVC") as! FriendProfileVC
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

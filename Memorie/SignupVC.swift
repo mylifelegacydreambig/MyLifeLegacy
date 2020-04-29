@@ -16,6 +16,18 @@ class SignupVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //MARK:- Button click event
+    @IBAction func clickToBack(_ sender: Any) {
+        self.view.endEditing(true)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func clickToSignUp(_ sender: Any) {
+        self.view.endEditing(true)
+        let vc : VerificationVC = STORYBOARD.MAIN.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 
     /*
     // MARK: - Navigation

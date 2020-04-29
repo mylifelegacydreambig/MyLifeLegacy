@@ -100,7 +100,7 @@ struct IMAGE {
 struct STORYBOARD {
     static var MAIN = UIStoryboard(name: "Main", bundle: nil)
     static var HOME = UIStoryboard(name: "Home", bundle: nil)
-    static var VENUE = UIStoryboard(name: "Venue", bundle: nil)
+    static var VAULT = UIStoryboard(name: "Vault", bundle: nil)
     
 }
 

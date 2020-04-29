@@ -8,15 +8,37 @@
 
 import UIKit
 
-class AddVaultVC: UIViewController {
+class AddVaultVC: UploadImageVC {
 
+    @IBOutlet weak var imgView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func clickToBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func clickToAddImage(_ sender: Any) {
+        uploadImage()
+    }
+    
+    @IBAction func clickToSelectDate(_ sender: Any) {
+        
+    }
+    
+    @IBAction func clickToSelectRecipient(_ sender: Any) {
+        let vc : AddFriendsVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "AddFriendsVC") as! AddFriendsVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func selectedImage(choosenImage: UIImage) {
+        imgView.image = choosenImage
+    }
+    
+    
     /*
     // MARK: - Navigation
 

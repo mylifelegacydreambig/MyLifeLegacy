@@ -9,19 +9,17 @@
 import Foundation
 import UIKit
 
-let APP_REGULAR = "MyriadPro-Regular"
-let APP_BOLD = "MyriadPro-Bold"
-let APP_BLACK = "MyriadPro-Black"
-let APP_LIGHT = "MyriadPro-Light"
-let APP_SEMIBOLD = "MyriadPro-Semibold"
+let APP_REGULAR = "SFProText-Regular"
+let APP_BOLD = "SFProText-Bold"
+let APP_LIGHT = "SFProText-Light"
+let APP_MEDIUM = "SFProText-Medium"
 
 enum FontType : String {
     case Clear = ""
     case ARegular = "ar"
     case ABold = "ab"
-    case ABlack = "abl"
     case ALight = "al"
-    case ASemiBold = "as"
+    case AMedium = "am"
 }
 
 
@@ -36,12 +34,10 @@ extension FontType {
                 return APP_REGULAR
             case .ABold:
                 return APP_BOLD
-            case .ABlack:
-                return APP_BLACK
             case .ALight:
                 return APP_LIGHT
-            case .ASemiBold:
-                return APP_SEMIBOLD
+            case .AMedium:
+                return APP_MEDIUM
                 
             }
         }
