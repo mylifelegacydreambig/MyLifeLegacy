@@ -7,11 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		181000302448364B00961285 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1810002F2448364B00961285 /* SignupVC.swift */; };
-		181000322448365D00961285 /* VerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181000312448365D00961285 /* VerificationVC.swift */; };
+		093334542461EB95001EC2C2 /* DatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 093334532461EB95001EC2C2 /* DatePickerCell.xib */; };
+		093FDE37246B1E43002F740F /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 093FDE36246B1E43002F740F /* awsconfiguration.json */; };
+		09A25BAD2460E08C001C560A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BAC2460E08B001C560A /* API.swift */; };
+		09A25BBC2460E267001C560A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB22460E263001C560A /* LaunchScreenViewController.swift */; };
+		09A25BBD2460E267001C560A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB32460E263001C560A /* Constants.swift */; };
+		09A25BBE2460E267001C560A /* DynamoDBTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB42460E264001C560A /* DynamoDBTables.swift */; };
+		09A25BBF2460E267001C560A /* MFAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB52460E264001C560A /* MFAViewController.swift */; };
+		09A25BC02460E267001C560A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB62460E265001C560A /* SignUpViewController.swift */; };
+		09A25BC12460E267001C560A /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB72460E265001C560A /* ForgotPasswordViewController.swift */; };
+		09A25BC22460E267001C560A /* SignInControllerDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB82460E266001C560A /* SignInControllerDecision.swift */; };
+		09A25BC32460E267001C560A /* ConfirmForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB92460E266001C560A /* ConfirmForgotPasswordViewController.swift */; };
+		09A25BC42460E267001C560A /* ConfirmSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BBA2460E267001C560A /* ConfirmSignUpViewController.swift */; };
+		09A25BC52460E267001C560A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BBB2460E267001C560A /* SignInViewController.swift */; };
+		09A25BC72460E620001C560A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BC62460E620001C560A /* Extensions.swift */; };
+		09A25BC92460E86A001C560A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BC82460E86A001C560A /* APIManager.swift */; };
+		09A25BCB2460EE60001C560A /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BCA2460EE60001C560A /* Queries.swift */; };
+		09A25BCD2460EE6C001C560A /* Mutations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BCC2460EE6C001C560A /* Mutations.swift */; };
+		09A25BCF2460EE7E001C560A /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BCE2460EE7E001C560A /* Struct.swift */; };
 		181000342448366C00961285 /* CreateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181000332448366C00961285 /* CreateProfileVC.swift */; };
 		1862F844244829970074103F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1862F843244829970074103F /* AppDelegate.swift */; };
-		1862F848244829970074103F /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1862F847244829970074103F /* LoginVC.swift */; };
 		1862F84B244829970074103F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1862F849244829970074103F /* Main.storyboard */; };
 		1862F84D2448299D0074103F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1862F84C2448299D0074103F /* Assets.xcassets */; };
 		1862F8502448299D0074103F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1862F84E2448299D0074103F /* LaunchScreen.storyboard */; };
@@ -88,15 +103,30 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1810002F2448364B00961285 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupVC.swift; path = ../SignupVC.swift; sourceTree = "<group>"; };
-		181000312448365D00961285 /* VerificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationVC.swift; sourceTree = "<group>"; };
+		093334532461EB95001EC2C2 /* DatePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerCell.xib; sourceTree = "<group>"; };
+		093FDE36246B1E43002F740F /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		095AAF0C2463CD2F00B367AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		095AAF0D2463CD3000B367AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		09A25BAC2460E08B001C560A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		09A25BB22460E263001C560A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		09A25BB32460E263001C560A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		09A25BB42460E264001C560A /* DynamoDBTables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamoDBTables.swift; sourceTree = "<group>"; };
+		09A25BB52460E264001C560A /* MFAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFAViewController.swift; sourceTree = "<group>"; };
+		09A25BB62460E265001C560A /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		09A25BB72460E265001C560A /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		09A25BB82460E266001C560A /* SignInControllerDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInControllerDecision.swift; sourceTree = "<group>"; };
+		09A25BB92460E266001C560A /* ConfirmForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		09A25BBA2460E267001C560A /* ConfirmSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpViewController.swift; sourceTree = "<group>"; };
+		09A25BBB2460E267001C560A /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		09A25BC62460E620001C560A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		09A25BC82460E86A001C560A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		09A25BCA2460EE60001C560A /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
+		09A25BCC2460EE6C001C560A /* Mutations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutations.swift; sourceTree = "<group>"; };
+		09A25BCE2460EE7E001C560A /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		181000332448366C00961285 /* CreateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileVC.swift; sourceTree = "<group>"; };
 		1862F840244829970074103F /* Memorie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1862F843244829970074103F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1862F847244829970074103F /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = Memorie/LoginVC.swift; sourceTree = SOURCE_ROOT; };
-		1862F84A244829970074103F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1862F84C2448299D0074103F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1862F84F2448299D0074103F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1862F8512448299D0074103F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1862F85A24482AD00074103F /* UIDevice+Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Type.swift"; sourceTree = "<group>"; };
 		1862F85B24482AD00074103F /* Array+RUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+RUI.swift"; sourceTree = "<group>"; };
@@ -189,10 +219,19 @@
 		181000352448367000961285 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				1862F847244829970074103F /* LoginVC.swift */,
-				1810002F2448364B00961285 /* SignupVC.swift */,
-				181000312448365D00961285 /* VerificationVC.swift */,
+				09A25BC82460E86A001C560A /* APIManager.swift */,
 				181000332448366C00961285 /* CreateProfileVC.swift */,
+				09A25BB92460E266001C560A /* ConfirmForgotPasswordViewController.swift */,
+				09A25BBA2460E267001C560A /* ConfirmSignUpViewController.swift */,
+				09A25BB32460E263001C560A /* Constants.swift */,
+				09A25BB42460E264001C560A /* DynamoDBTables.swift */,
+				09A25BB72460E265001C560A /* ForgotPasswordViewController.swift */,
+				09A25BB22460E263001C560A /* LaunchScreenViewController.swift */,
+				09A25BB52460E264001C560A /* MFAViewController.swift */,
+				09A25BB82460E266001C560A /* SignInControllerDecision.swift */,
+				09A25BBB2460E267001C560A /* SignInViewController.swift */,
+				09A25BB62460E265001C560A /* SignUpViewController.swift */,
+				09A25BC62460E620001C560A /* Extensions.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -200,6 +239,8 @@
 		1862F837244829970074103F = {
 			isa = PBXGroup;
 			children = (
+				09A25BAC2460E08B001C560A /* API.swift */,
+				093FDE36246B1E43002F740F /* awsconfiguration.json */,
 				1862F842244829970074103F /* Memorie */,
 				1862F841244829970074103F /* Products */,
 				B9AB3596A091AAFF179B9FC6 /* Pods */,
@@ -219,6 +260,9 @@
 			isa = PBXGroup;
 			children = (
 				1862F843244829970074103F /* AppDelegate.swift */,
+				09A25BCA2460EE60001C560A /* Queries.swift */,
+				09A25BCC2460EE6C001C560A /* Mutations.swift */,
+				09A25BCE2460EE7E001C560A /* Struct.swift */,
 				1862F849244829970074103F /* Main.storyboard */,
 				18C47AE624483E59001EC28F /* Home.storyboard */,
 				18D903032448785D001B4666 /* Vault.storyboard */,
@@ -340,6 +384,7 @@
 		1881212B244860F100391A68 /* Collectionview Cell */ = {
 			isa = PBXGroup;
 			children = (
+				093334532461EB95001EC2C2 /* DatePickerCell.xib */,
 				1881212C2448610D00391A68 /* CustomCategoryCVC.swift */,
 				1881212D2448610D00391A68 /* CustomCategoryCVC.xib */,
 				18D9030524487AD6001B4666 /* CustomVideoCVC.swift */,
@@ -463,7 +508,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 1862F837244829970074103F;
 			productRefGroup = 1862F841244829970074103F /* Products */;
@@ -484,11 +528,13 @@
 				18D9030824487AD6001B4666 /* CustomVideoCVC.xib in Resources */,
 				18C47AE724483E59001EC28F /* Home.storyboard in Resources */,
 				1862F8BB24482AD00074103F /* Localizable.strings in Resources */,
+				093FDE37246B1E43002F740F /* awsconfiguration.json in Resources */,
 				18D9031424488302001B4666 /* DeletePopupView.xib in Resources */,
 				1862F8D22448303D0074103F /* SFProText-Light.ttf in Resources */,
 				18C47AED2448435B001EC28F /* CustomHomeTVC.xib in Resources */,
 				18812126244854DA00391A68 /* CustomLegacyTVC.xib in Resources */,
 				18812133244866B500391A68 /* CustomFriendTVC.xib in Resources */,
+				093334542461EB95001EC2C2 /* DatePickerCell.xib in Resources */,
 				1862F84D2448299D0074103F /* Assets.xcassets in Resources */,
 				18D903042448785D001B4666 /* Vault.storyboard in Resources */,
 				1881212F2448610D00391A68 /* CustomCategoryCVC.xib in Resources */,
@@ -549,12 +595,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09A25BC02460E267001C560A /* SignUpViewController.swift in Sources */,
 				1862F8A324482AD00074103F /* Fonts.swift in Sources */,
 				1862F8A424482AD00074103F /* Colors.swift in Sources */,
 				1862F89A24482AD00074103F /* NSObject+Copy.swift in Sources */,
 				1862F8AF24482AD00074103F /* TextView.swift in Sources */,
 				1862F8B624482AD00074103F /* DatePickerManager.swift in Sources */,
 				1862F89924482AD00074103F /* Array+RUI.swift in Sources */,
+				09A25BBC2460E267001C560A /* LaunchScreenViewController.swift in Sources */,
 				1862F8A624482AD00074103F /* View.swift in Sources */,
 				1862F8B524482AD00074103F /* FloatRatingView.swift in Sources */,
 				1862F8B324482AD00074103F /* GlobalConstant.swift in Sources */,
@@ -562,8 +610,11 @@
 				1862F8B124482AD00074103F /* Button.swift in Sources */,
 				1862F8B924482AD00074103F /* BundleExtension.swift in Sources */,
 				18D9030224487179001B4666 /* FriendProfileVC.swift in Sources */,
+				09A25BC22460E267001C560A /* SignInControllerDecision.swift in Sources */,
 				1862F8AC24482AD00074103F /* GradientLayer.swift in Sources */,
 				1881212E2448610D00391A68 /* CustomCategoryCVC.swift in Sources */,
+				09A25BC32460E267001C560A /* ConfirmForgotPasswordViewController.swift in Sources */,
+				09A25BC72460E620001C560A /* Extensions.swift in Sources */,
 				1862F8A824482AD00074103F /* CollectionView.swift in Sources */,
 				1862F8B224482AD00074103F /* CustomDashedView.swift in Sources */,
 				1862F89B24482AD00074103F /* Data+RUI.swift in Sources */,
@@ -576,37 +627,45 @@
 				18D903162448842E001B4666 /* DeletePopupView.swift in Sources */,
 				1862F8B824482AD00074103F /* DisablePasteForTextField.swift in Sources */,
 				18C47AEC2448435B001EC28F /* CustomHomeTVC.swift in Sources */,
+				09A25BAD2460E08C001C560A /* API.swift in Sources */,
 				1862F8BE24482AD00074103F /* UploadImageVC.swift in Sources */,
 				18812122244854B000391A68 /* MyLegacyVC.swift in Sources */,
 				1862F89824482AD00074103F /* UIDevice+Type.swift in Sources */,
-				181000322448365D00961285 /* VerificationVC.swift in Sources */,
+				09A25BC12460E267001C560A /* ForgotPasswordViewController.swift in Sources */,
 				1862F8AD24482AD00074103F /* TableView.swift in Sources */,
 				1862F8BF24482AD00074103F /* UIImage+ProportionalFill.m in Sources */,
 				1862F8B424482AD00074103F /* DateTimeUtility.swift in Sources */,
 				1862F8C024482AD00074103F /* Preference.swift in Sources */,
 				1881213824486E5D00391A68 /* AddFriendsVC.swift in Sources */,
+				09A25BCD2460EE6C001C560A /* Mutations.swift in Sources */,
+				09A25BC52460E267001C560A /* SignInViewController.swift in Sources */,
 				1862F89C24482AD00074103F /* UIColor+RUI.swift in Sources */,
-				181000302448364B00961285 /* SignupVC.swift in Sources */,
 				18D903112448817F001B4666 /* AllVaultVC.swift in Sources */,
 				1862F8AA24482AD00074103F /* TableViewCell.swift in Sources */,
 				1881212A244860E900391A68 /* AddLegacyVC.swift in Sources */,
+				09A25BC92460E86A001C560A /* APIManager.swift in Sources */,
 				18D9030B24487CB9001B4666 /* MyVaultVC.swift in Sources */,
 				18812125244854DA00391A68 /* CustomLegacyTVC.swift in Sources */,
 				18812132244866B500391A68 /* CustomFriendTVC.swift in Sources */,
 				1862F89D24482AD00074103F /* String+RUI.swift in Sources */,
 				188121352448689200391A68 /* MyFriendsFamilyVC.swift in Sources */,
+				09A25BCF2460EE7E001C560A /* Struct.swift in Sources */,
 				18C47AEF244845C7001EC28F /* HomeVC.swift in Sources */,
 				1862F8A224482AD00074103F /* UIView+ParentController.swift in Sources */,
 				181000342448366C00961285 /* CreateProfileVC.swift in Sources */,
 				18D903182448875D001B4666 /* AddVaultVC.swift in Sources */,
 				1862F8AE24482AD00074103F /* TextField.swift in Sources */,
-				1862F848244829970074103F /* LoginVC.swift in Sources */,
+				09A25BC42460E267001C560A /* ConfirmSignUpViewController.swift in Sources */,
+				09A25BBD2460E267001C560A /* Constants.swift in Sources */,
 				1862F844244829970074103F /* AppDelegate.swift in Sources */,
+				09A25BCB2460EE60001C560A /* Queries.swift in Sources */,
+				09A25BBE2460E267001C560A /* DynamoDBTables.swift in Sources */,
 				1881212824485DEF00391A68 /* SearchMyLegacyVC.swift in Sources */,
 				1862F8A024482AD00074103F /* Date+RUI.swift in Sources */,
 				1862F89E24482AD00074103F /* Lable.swift in Sources */,
 				18D9030E24487D87001B4666 /* CustomCalendarTVC.swift in Sources */,
 				1862F8B024482AD00074103F /* ImageView.swift in Sources */,
+				09A25BBF2460E267001C560A /* MFAViewController.swift in Sources */,
 				1862F8A724482AD00074103F /* DatePicker.swift in Sources */,
 				1862F8A924482AD00074103F /* PlaceholderTextView.swift in Sources */,
 			);
@@ -618,7 +677,7 @@
 		1862F849244829970074103F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1862F84A244829970074103F /* Base */,
+				095AAF0C2463CD2F00B367AD /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -626,7 +685,7 @@
 		1862F84E2448299D0074103F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1862F84F2448299D0074103F /* Base */,
+				095AAF0D2463CD3000B367AD /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -753,14 +812,15 @@
 			baseConfigurationReference = 9C68DE8C13AB65140021E825 /* Pods-Memorie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JT5QH9V9LG;
 				INFOPLIST_FILE = Memorie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.Memorie;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uplancer.memorie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Memorie/Custom Class/AppCommon/Memorie-Bridging-Header.h";
@@ -774,14 +834,15 @@
 			baseConfigurationReference = E81C3888861476C30DF3CB41 /* Pods-Memorie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JT5QH9V9LG;
 				INFOPLIST_FILE = Memorie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.Memorie;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uplancer.memorie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Memorie/Custom Class/AppCommon/Memorie-Bridging-Header.h";

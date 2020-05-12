@@ -16,8 +16,36 @@ class CustomHomeTVC: UITableViewCell {
     @IBOutlet weak var vaultBtn: UIButton!
     @IBOutlet weak var arrowBtn: UIButton!
     
+    
+    @objc func switchValueDidChange(sender:UISwitch!) {
+           if  sender.isOn == true{
+            me[0].isPublic = true
+            subTitleLbl.text = "Your profile is set to public."
+
+        } else {
+ me[0].isPublic = false
+       subTitleLbl.text = "Your profile is set to private."
+        }
+        
+        UpdateUser(methodhandler: Status)
+    }
+    
+    func Status(){
+        displayToast("Your profile settings have been updated.".localized())
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        if me[0].isPublic == true {
+            mySwitch.isOn = true
+            subTitleLbl.text = "Your profile is set to public."
+        } else{
+            mySwitch.isOn = false
+               subTitleLbl.text = "Your profile is set to private."
+        }
+        
+        mySwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+
         // Initialization code
     }
 

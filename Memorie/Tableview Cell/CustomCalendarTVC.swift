@@ -9,7 +9,9 @@
 import UIKit
 
 class CustomCalendarTVC: UITableViewCell {
-
+    @IBOutlet weak var eventLabel: Label!
+    @IBOutlet weak var MonthLabel: Label!
+    @IBOutlet weak var DayLabel: Label!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

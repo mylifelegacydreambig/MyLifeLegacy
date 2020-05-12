@@ -28,13 +28,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffb-Ld-Vr4">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSs-Nz-9Eu">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSs-Nz-9Eu" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                         <rect key="frame" x="10" y="10" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="GKj-nq-PDr"/>
                                             <constraint firstAttribute="width" constant="40" id="rzk-i7-ndA"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="temp_user2"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kathy Barrett" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1j-0S-02w" customClass="Label" customModule="Memorie" customModuleProvider="target">
                                         <rect key="frame" x="60" y="21" width="93.5" height="18"/>
@@ -161,6 +166,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.1764705882352941" green="0.50588235294117645" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="more_horiz"/>
+                                        <connections>
+                                            <action selector="MoreBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yAg-7t-yP4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -210,6 +218,17 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="CategoriesLbl" destination="WPc-HQ-dSz" id="ach-7U-1zF"/>
+                <outlet property="DescriptionLabel" destination="7bb-xT-1hA" id="sT3-Qv-7E0"/>
+                <outlet property="LikeBtn" destination="lcK-il-DHA" id="jcw-o7-qxO"/>
+                <outlet property="MoreBtn" destination="Vc7-rA-UIB" id="Cff-N9-RAY"/>
+                <outlet property="imgBtn" destination="GSs-Nz-9Eu" id="7Bn-3s-UDb"/>
+                <outlet property="imgView" destination="m15-Sr-5oD" id="t9d-Qh-1PA"/>
+                <outlet property="likesLbl" destination="AYl-wo-WlJ" id="qDg-Q2-CPX"/>
+                <outlet property="nameLabel" destination="b1j-0S-02w" id="JZE-Vp-8Mc"/>
+                <outlet property="timeLabel" destination="Oh3-Tz-ZnN" id="8um-0N-Dkg"/>
+            </connections>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </tableViewCell>
     </objects>

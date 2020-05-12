@@ -7,21 +7,109 @@
 //
 
 import UIKit
+import Gallery
+import SVProgressHUD
+import Lightbox
+import AVFoundation
+import AVKit
+import DropDown
 
-class MyLegacyVC: UIViewController {
+var isViewingMyProfile: Bool! = true
 
+class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+    }
+    
+    
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    }
+    
+    
+
+    
+    
     @IBOutlet var headerView: View!
     @IBOutlet weak var tblView: UITableView!
     
+    @IBOutlet weak var nameLabel: Label!
+    var username: String!
+    func SetLabels(){
+           nameLabel.text = currentuser.firstName
+       }
+       
+     func downloadprofileimage() {
+         let senderimage = username
+                               let tempstr: String = senderimage! + "-profile.jpg"
+        let imagename = API.CLOUDFRONT_URL + "users/" + senderimage! + "/" + tempstr
+                               
+                               let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: senderimage! + "/" + tempstr, height: Int(imgBtn.frame.height), width: Int(imgBtn.frame.width))
+     
+              
+                imgBtn.setUserProfileImage(url: profilePicMainurl, profilename: senderimage!)
+       
+
+              UIView.animate(withDuration: 1.0, animations: { [weak view] in
+                                     self.imgBtn.alpha = 1
+                                             })
     
+     }
+    
+        func downloadcoverimage() {
+            CoverImage.image = UIImage(named:"cover")
+            CoverImage.contentMode = .scaleAspectFill
+             let senderimage = username
+                                         
+           let tempstr: String = senderimage! + "-cover.jpg"
+           let imagename = API.CLOUDFRONT_URL + "users/" + senderimage! + "/" + tempstr
+
+            
+            
+           let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: (senderimage! + "/" + tempstr).escaped(), height: Int(CoverImage.frame.height), width: Int(CoverImage.frame.width))
+
+            
+            CoverImage.setCover(url: profilePicMainurl)
+         }
+    
+    @IBOutlet weak var imgBtn: Button!
+     @IBOutlet weak var CoverImage: ImageView!
+    var currentPosts: [post] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        isViewingMyProfile = true
+        username = currentuser.primaryKey
+        LoadPosts()
+        SetLabels()
+        downloadprofileimage()
+        downloadcoverimage()
         // Do any additional setup after loading the view.
         tblView.register(UINib.init(nibName: "CustomLegacyTVC", bundle: nil), forCellReuseIdentifier: "CustomLegacyTVC")
         tblView.tableHeaderView = headerView
         tblView.reloadData()
     }
+    
+    
+    
+    func LoadPosts(){
+          if isViewingMyProfile == true {
+            FetchPosts(username: globalusername, methodhandler: SetFilter)
+        }
+    }
+    
+    func SetFilter(){
+        if isViewingMyProfile == true {
+                  currentPosts = arrPosts
+            currentPosts = currentPosts.unique()
+            currentPosts = currentPosts.sorted {$0.sortKey > $1.sortKey}
+            tblView.reloadData()
+              }
+        
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        SetFilter()
+    }
+    
     
 
     @IBAction func clickToAdd(_ sender: Any) {
@@ -37,21 +125,25 @@ class MyLegacyVC: UIViewController {
         let vc : SearchMyLegacyVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "SearchMyLegacyVC") as! SearchMyLegacyVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
+
+
+
+
 extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
+    
+      func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+          let cell : CustomLegacyTVC = tblView.dequeueReusableCell(withIdentifier: "CustomLegacyTVC") as! CustomLegacyTVC
+         cell.imageView?.sd_cancelCurrentImageLoad()
+         cell.imgBtn.sd_cancelCurrentImageLoad()
+
+      }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return currentPosts.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -59,13 +151,97 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : CustomLegacyTVC = tblView.dequeueReusableCell(withIdentifier: "CustomLegacyTVC") as! CustomLegacyTVC
         
+        guard indexPath.row < currentPosts.count else {
+            return UITableViewCell()
+        }
+        
+        let cell : CustomLegacyTVC = tblView.dequeueReusableCell(withIdentifier: "CustomLegacyTVC") as! CustomLegacyTVC
+        let finaldata : post = currentPosts[indexPath.row]
+        let username = finaldata.primaryKey.components(separatedBy: "-post").first!
+        let key =  username+"/posts/" + finaldata.mediaURL
+        
+        let url = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: key, height: Int(cell.imgView!.frame.height), width: Int(cell.imgView!.frame.width))
+    
+        let tempstr: String = username + "-profile.jpg"
+                                     
+        let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: username + "/" + tempstr, height: Int(cell.imgBtn.frame.height), width: Int(cell.imgBtn.frame.width))
+           
+        cell.imgBtn.setProfileImage(url: profilePicMainurl, profilename: username)
+             
+        cell.imgView.setImageFromURL(url: url)
+        cell.nameLabel.text = finaldata.postedBy
+        cell.timeLabel.text = TimeExtractor(timestamp: finaldata.lastEdited)
+        cell.likesLbl.setTitle(String(finaldata.likes) + " Likes", for: .normal)
+        
+        if finaldata.description == "n/a" {
+            cell.DescriptionLabel.text = " "
+        } else {
+           cell.DescriptionLabel.text = finaldata.description
+        }
+        
+        cell.CategoriesLbl.text = finaldata.categories.replacingOccurrences(of: ",", with: " #").lowercased()
+        cell.CategoriesLbl.text = "#"+cell.CategoriesLbl.text!
         cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        let finaldata : post = currentPosts[indexPath.row]
+              let username = finaldata.primaryKey.components(separatedBy: "-post").first!
+              let key =  username+"/posts/" + finaldata.mediaURL
+              
+        let url = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: key, height: Int(self.view.frame.height), width: Int(self.view.frame.width))
+        
+        if finaldata.postType == "IMAGE"{
+            let images = [
+              LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                            text: finaldata.description)
+            ]
+
+            // Create an instance of LightboxController.
+            let controller = LightboxController(images: images)
+
+            // Set delegates.
+            controller.pageDelegate = self
+            controller.dismissalDelegate = self
+
+            // Use dynamic background.
+            controller.dynamicBackground = true
+
+            // Present your controller.
+            present(controller, animated: true, completion: nil)
+            
+        } else {
+            
+            
+            let images = [
+                        LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                                      text: finaldata.description,
+                                      videoURL: URL(string: API.CLOUDFRONT_URL+"users/"+key.replacingOccurrences(of: ".jpg", with: ".mp4")))
+                      ]
+
+   // Create an instance of LightboxController.
+   let controller = LightboxController(images: images)
+
+   // Set delegates.
+   controller.pageDelegate = self
+   controller.dismissalDelegate = self
+
+   // Use dynamic background.
+   controller.dynamicBackground = true
+
+   // Present your controller.
+   present(controller, animated: true, completion: nil)
+   
+            
+        }
+        
+       
+
+        
         
     }
 }
+

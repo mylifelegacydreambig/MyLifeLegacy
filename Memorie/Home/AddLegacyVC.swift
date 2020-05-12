@@ -7,16 +7,21 @@
 //
 
 import UIKit
-
-class AddLegacyVC: UploadImageVC {
-
+import Gallery
+import SVProgressHUD
+import Lightbox
+import AVFoundation
+import AVKit
+class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDelegate, LightboxControllerDismissalDelegate {
+    
+    var newpost: PostInput = PostInput(primaryKey:globalusername+"-post", sortKey: globalusername+Date().SQL(), mediaUrl: "n/a", description: "n/a", categories: "n/a", likes: 0, year: "n/a", searchString: "n/a", postedBy: me[0].firstName, createdAt: String(Int(Date().timeIntervalSince1970)), lastEdited: String(Int(Date().timeIntervalSince1970)), postType: "IMAGE")
+    
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var categoryCV: UICollectionView!
     @IBOutlet weak var descTxtView: TextView!
     
-    var selectedCategory = -1
     var arrCategory = ["TRAVEL", "COOKING", "MOVIE", "READING"]
-    
+    var arrSelectedCategories: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,17 +35,274 @@ class AddLegacyVC: UploadImageVC {
     }
     
     @IBAction func clickToAddImage(_ sender: Any) {
-        uploadImage()
+        ChooseImage()
     }
     
     @IBAction func clickToNext(_ sender: Any) {
+       
+        guard imgView.image != nil else {
+            displayToast("Please select an image or a video.")
+            return
+        }
         
+        guard newpost.categories != "unknown" else {
+            displayToast("Please select a category.")
+            return
+        }
+        
+        let date = Date()
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        if let year = components.year{
+             newpost.year = String(year)
+        }
+        
+        if descTxtView.text.count > 0 {
+            newpost.description = descTxtView.text
+        }
+       
+        newpost.categories = arrSelectedCategories.joined(separator: ",")
+        newpost.mediaUrl =  self.newpost.createdAt!+".jpg"
+        let arr: [String] = [newpost.categories!,newpost.description!,newpost.year!]
+        newpost.searchString = arr.joined().lowercased()
+        
+        AppDelegate().sharedDelegate().showLoader()
+        
+        let mypost: post = post(primaryKey: newpost.primaryKey!,
+                                sortKey: newpost.sortKey!,
+                                mediaURL: newpost.mediaUrl!,
+                                description: newpost.description!,
+                                categories: newpost.categories!,
+                                likes: newpost.likes!,
+                                year: newpost.year!,
+                                searchString: newpost.searchString!,
+                                postedBy: newpost.postedBy!,
+                                createdAt: newpost.createdAt!,
+                                lastEdited: newpost.lastEdited!,
+                                postType: newpost.postType!)
+        
+        arrPosts.append(mypost)
+        
+        UpdatePost(input: newpost, methodhandler: GoBack)
     }
     
-    override func selectedImage(choosenImage: UIImage) {
-        imgView.image = choosenImage
+    
+    func GoBack(){
+        self.navigationController?.popViewController(animated: true)
+
+       AppDelegate().sharedDelegate().removeLoader()
     }
     
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+               
+           }
+           
+           
+           func galleryController(_ controller: GalleryController, didSelectImages images: [Image]) {
+               
+            newpost.postType = "IMAGE"
+               images.last?.resolve(completion: { (image) in
+                   var myimgs:[UIImage] = []
+                   myimgs.append(image!)
+                   
+             
+                self.imgView.image = image!
+                  
+                self.arr[3] = self.newpost.createdAt!
+                self.arr[4] = ".jpg"
+                let key: String = self.arr.joined()
+                ImageS3(key: key, data: image!.jpegData(compressionQuality: 0.3)!)
+                 
+               })
+               
+               controller.dismiss(animated: true, completion: nil)
+               gallery = nil
+           }
+           
+
+ 
+    
+    func compressVideo(inputURL: URL, outputURL: URL, handler:@escaping (_ exportSession: AVAssetExportSession?)-> Void) {
+           let urlAsset = AVURLAsset(url: inputURL, options: nil)
+           guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPreset960x540) else {
+               handler(nil)
+               return
+           }
+      // AVAssetExportPresetMediumQuality
+
+           exportSession.outputURL = outputURL
+           exportSession.outputFileType = AVFileType.mp4 //AVFileTypeQuickTimeMovie (m4v)
+           exportSession.shouldOptimizeForNetworkUse = true
+           exportSession.exportAsynchronously { () -> Void in
+               handler(exportSession)
+           }
+       }
+       
+     var UploadURL: URL!
+       
+    func CompressAndUpload(key: String, fileURL:URL){
+           // Put in fileURL the URL of the original .mov video
+           let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".mp4")
+           var compressedFileData : Data? =  nil
+
+           // Encode to mp4
+           compressVideo(inputURL: fileURL, outputURL: compressedURL, handler: { (_ exportSession: AVAssetExportSession?) -> Void in
+
+               switch exportSession!.status {
+                   case .completed:
+
+                   print("Video compressed successfully")
+                   do {
+                    
+                    let data = try Data(contentsOf:exportSession!.outputURL!,options: [.alwaysMapped , .uncached ] )
+                    
+                      VideoS3(key: key, data: data)
+                    
+                     self.UploadURL = exportSession!.outputURL!
+                       // Call upload function here using compressedFileData
+                   } catch _ {
+                       print ("Error converting compressed file to Data")
+                   }
+
+                   default:
+                       print("Could not compress video")
+               }
+           } )
+       }
+     
+    func getVideoUrl(item: AVPlayerItem) -> URL? {
+        let asset = item.asset
+        if asset == nil {
+            return nil
+        }
+        if let urlAsset = asset as? AVURLAsset {
+            return urlAsset.url
+        }
+        return nil
+    }
+    
+    func galleryController(_ controller: GalleryController, didSelectVideo video: Video) {
+            controller.dismiss(animated: true, completion: nil)
+        
+ 
+        video.fetchPlayerItem { (item) in
+            
+            guard let tempPath = self.getVideoUrl(item: item!) else {
+                 print("Can't find the video. Please try again.")
+                return
+            }
+            
+            
+           
+            self.newpost.postType = "VIDEO"
+            
+             
+             self.arr[3] = self.newpost.createdAt!
+             self.arr[4] = ".mp4"
+             let key: String = self.arr.joined()
+             self.CompressAndUpload(key: key, fileURL: tempPath)
+            
+             do {
+
+             let data = try Data(contentsOf:tempPath, options: [.alwaysMapped , .uncached ] )
+                                
+             let jpgkey = key.replacingOccurrences(of: ".mp4", with: ".jpg")
+                 if let image = (self.videoSnapshot(vidURL: tempPath)) {
+                     ImageS3(key: jpgkey, data: image.jpegData(compressionQuality: 0.3)!)
+                     self.imgView.image = image
+
+                     }
+                            }
+                            catch {
+                                
+                                print("Error in uploading. Please try again.")
+                                print(error)
+                            }
+            
+            
+            
+            
+            
+        }
+            
+            
+           }
+    
+    
+
+           func videoSnapshot(vidURL: URL) -> UIImage? {
+
+               let asset = AVURLAsset(url: vidURL)
+               let generator = AVAssetImageGenerator(asset: asset)
+               generator.appliesPreferredTrackTransform = true
+
+               let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
+
+               do {
+                   let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
+                   return UIImage(cgImage: imageRef)
+               }
+               catch let error as NSError
+               {
+                   print("Image generation failed with error \(error)")
+                   return nil
+               }
+           }
+    
+    
+           func galleryController(_ controller: GalleryController, requestLightbox images: [Image]) {
+               LightboxConfig.DeleteButton.enabled = true
+               
+               SVProgressHUD.show()
+               Image.resolve(images: images, completion: { [weak self] resolvedImages in
+                   SVProgressHUD.dismiss()
+                   self?.showLightbox(images: resolvedImages.compactMap({ $0 }))
+               })
+           }
+           
+           func galleryControllerDidCancel(_ controller: GalleryController) {
+               controller.dismiss(animated: true, completion: nil)
+               gallery = nil
+           }
+           
+           func showLightbox(images: [UIImage]) {
+               guard images.count > 0 else {
+                   return
+               }
+               
+               let lightboxImages = images.map({ LightboxImage(image: $0) })
+               let lightbox = LightboxController(images: lightboxImages, startIndex: 0)
+               lightbox.dismissalDelegate = self
+               
+               gallery.present(lightbox, animated: true, completion: nil)
+           }
+           
+           
+           func setImage(){
+               
+               
+               
+           }
+           
+           func ChooseImage(){
+           
+               gallery = GalleryController()
+               gallery.delegate = self
+               Config.Camera.imageLimit = 1
+            Config.VideoEditor.maximumDuration = .infinity
+            Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
+               present(gallery, animated: true, completion: nil)
+           }
+           let editor: VideoEditing = VideoEditor()
+           var gallery: GalleryController!
+
+    
+    
+    
+    var arr: [String] = ["users/",globalusername,"/posts/"," ",".jpg"]
+    
+
     /*
     // MARK: - Navigation
 
@@ -65,17 +327,38 @@ extension AddLegacyVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : CustomCategoryCVC = categoryCV.dequeueReusableCell(withReuseIdentifier: "CustomCategoryCVC", for: indexPath) as! CustomCategoryCVC
+          let finaldata = arrCategory[indexPath.row]
+        
         cell.titleLbl.text = arrCategory[indexPath.row]
-        if selectedCategory == indexPath.row {
-            cell.outerView.backgroundColor = PinkColor
-        }else{
-            cell.outerView.backgroundColor = LightBlueColor
+        
+              if arrSelectedCategories.contains(finaldata) {
+                 cell.outerView.backgroundColor = PinkColor
+              } else {
+                cell.outerView.backgroundColor = LightBlueColor
         }
+        
+   
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedCategory = indexPath.row
-        categoryCV.reloadData()
+        
+        let finaldata = arrCategory[indexPath.row]
+        
+        if arrSelectedCategories.contains(finaldata) {
+            
+            if let index = arrSelectedCategories.index(where: { $0 == finaldata}) {
+                arrSelectedCategories.remove(at: index)
+                 categoryCV.reloadData()
+                     }
+            
+            
+        } else {
+             arrSelectedCategories.append(finaldata)
+              categoryCV.reloadData()
+        }
+       
+        
+      
     }
 }

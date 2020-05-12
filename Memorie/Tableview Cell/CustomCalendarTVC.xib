@@ -118,6 +118,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="DayLabel" destination="yjy-SN-GQz" id="kTj-nk-bVe"/>
+                <outlet property="MonthLabel" destination="Ohf-Dr-Tcq" id="UEb-Ld-cJC"/>
+                <outlet property="eventLabel" destination="VXZ-Bc-twW" id="nPO-LH-I8d"/>
+            </connections>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </tableViewCell>
     </objects>

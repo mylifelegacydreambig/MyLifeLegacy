@@ -8,6 +8,13 @@
 
 import Foundation
 
+extension Date{
+    func SQL()->String{
+        return self.asSQL().replacingOccurrences(of: "'", with: "")
+    }
+}
+
+
 func getCurrentTimeStampValue() -> String
 {
     return String(format: "%0.0f", Date().timeIntervalSince1970)

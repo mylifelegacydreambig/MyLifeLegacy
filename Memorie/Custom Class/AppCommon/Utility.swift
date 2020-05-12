@@ -264,31 +264,6 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
 
 
 //MARK:- Open Url
-func openUrlInSafari(strUrl : String)
-{
-    if strUrl.trimmed == "" {
-        return
-    }
-    var newStrUrl = strUrl
-    if !newStrUrl.contains("http://") && !newStrUrl.contains("https://") {
-        newStrUrl = "http://" + strUrl
-    }
-    if let url = URL(string: newStrUrl) {
-        if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 11.0, *) {
-                let config = SFSafariViewController.Configuration()
-                config.entersReaderIfAvailable = true
-                let vc = SFSafariViewController(url: url, configuration: config)
-                UIApplication.topViewController()!.present(vc, animated: true)
-            } else {
-                // Fallback on earlier versions
-                UIApplication.shared.open(url, options: [:]) { (isOpen) in
-                    printData(isOpen)
-                }
-            }
-        }
-    }
-}
 
 //MARK:- Color function
 func colorFromHex(hex : String) -> UIColor

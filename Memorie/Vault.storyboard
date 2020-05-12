@@ -47,13 +47,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4TV-eE-qOc">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="999"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3c8-Bb-ucE" customClass="View" customModule="Memorie" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oaq-ec-FKq" customClass="View" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="-150" width="320" height="300"/>
+                                                        <rect key="frame" x="0.0" y="-150" width="320" height="300.5"/>
                                                         <color key="backgroundColor" red="0.51372549020000002" green="0.71372549019999998" blue="0.81176470590000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="300" id="YlJ-Qe-TI6"/>
@@ -67,27 +67,41 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDi-ae-l7Q">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R4r-xQ-U19" customClass="ImageView" customModule="Memorie" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="-150" width="320" height="300.5"/>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDi-ae-l7Q" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="F91-md-SzU"/>
                                                             <constraint firstAttribute="width" constant="40" id="e7D-re-Squ"/>
                                                         </constraints>
                                                         <state key="normal" image="back_black"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="20"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="clickToBack:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="hab-Ud-2VQ"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDg-Lf-8Xu">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDg-Lf-8Xu" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                                         <rect key="frame" x="15" y="85" width="130" height="130"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="130" id="TZ3-m7-bFT"/>
                                                             <constraint firstAttribute="width" constant="130" id="dhS-XY-zOE"/>
                                                         </constraints>
                                                         <state key="normal" backgroundImage="temp_user2"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="65"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kathy Barrett" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-e3-IdV" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="155" y="160" width="155" height="19.5"/>
+                                                        <rect key="frame" x="155" y="160.5" width="155" height="19"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -106,12 +120,16 @@
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="RDg-Lf-8Xu" secondAttribute="bottom" id="315-z4-U8m"/>
                                                     <constraint firstItem="RDg-Lf-8Xu" firstAttribute="top" secondItem="3c8-Bb-ucE" secondAttribute="top" constant="85" id="AeZ-zZ-vDc"/>
+                                                    <constraint firstItem="R4r-xQ-U19" firstAttribute="bottom" secondItem="Oaq-ec-FKq" secondAttribute="bottom" id="HVX-4A-g5i"/>
                                                     <constraint firstItem="HDi-ae-l7Q" firstAttribute="top" secondItem="3c8-Bb-ucE" secondAttribute="top" id="SBq-gN-WCu"/>
                                                     <constraint firstItem="Oaq-ec-FKq" firstAttribute="leading" secondItem="3c8-Bb-ucE" secondAttribute="leading" id="Wqd-wd-oaV"/>
+                                                    <constraint firstItem="R4r-xQ-U19" firstAttribute="trailing" secondItem="Oaq-ec-FKq" secondAttribute="trailing" id="ifE-iv-gXe"/>
                                                     <constraint firstAttribute="trailing" secondItem="Oaq-ec-FKq" secondAttribute="trailing" id="ll2-a4-z5L"/>
                                                     <constraint firstItem="RDg-Lf-8Xu" firstAttribute="leading" secondItem="3c8-Bb-ucE" secondAttribute="leading" constant="15" id="mWP-Hs-all"/>
                                                     <constraint firstItem="0TV-e3-IdV" firstAttribute="leading" secondItem="RDg-Lf-8Xu" secondAttribute="trailing" constant="10" id="n95-ct-VTX"/>
+                                                    <constraint firstItem="R4r-xQ-U19" firstAttribute="top" secondItem="Oaq-ec-FKq" secondAttribute="top" id="nYC-QC-t4k"/>
                                                     <constraint firstAttribute="trailing" secondItem="0TV-e3-IdV" secondAttribute="trailing" constant="10" id="oIw-Nc-n8e"/>
+                                                    <constraint firstItem="R4r-xQ-U19" firstAttribute="leading" secondItem="Oaq-ec-FKq" secondAttribute="leading" id="onH-d4-Ic0"/>
                                                     <constraint firstItem="HDi-ae-l7Q" firstAttribute="leading" secondItem="3c8-Bb-ucE" secondAttribute="leading" id="qIJ-FD-8tW"/>
                                                     <constraint firstItem="0TV-e3-IdV" firstAttribute="centerY" secondItem="RDg-Lf-8Xu" secondAttribute="centerY" constant="19.75" id="qhD-lK-eCt"/>
                                                     <constraint firstItem="0TV-e3-IdV" firstAttribute="top" secondItem="Oaq-ec-FKq" secondAttribute="bottom" constant="10" id="ynt-PW-3PU"/>
@@ -121,7 +139,7 @@
                                                 <rect key="frame" x="0.0" y="215" width="320" height="224"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages Received" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCO-0K-h2i" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="225" height="19.5"/>
+                                                        <rect key="frame" x="20" y="10" width="225" height="19"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -194,7 +212,7 @@
                                                 <rect key="frame" x="0.0" y="449" width="320" height="224"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmX-c8-LxZ" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="225" height="20"/>
+                                                        <rect key="frame" x="20" y="10" width="225" height="19"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -264,10 +282,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyn-hk-ynK">
-                                                <rect key="frame" x="0.0" y="683" width="320" height="240"/>
+                                                <rect key="frame" x="0.0" y="683" width="320" height="239"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Calendar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Mu-o1-hT2" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="95" height="20"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Mu-o1-hT2" customClass="Label" customModule="Memorie" customModuleProvider="target">
+                                                        <rect key="frame" x="20" y="10" width="75" height="19"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -282,7 +300,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FFd-L5-uhh">
-                                                        <rect key="frame" x="0.0" y="40" width="320" height="200"/>
+                                                        <rect key="frame" x="0.0" y="39" width="320" height="200"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="200" id="Npd-O2-2S8"/>
@@ -304,7 +322,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GZ-R3-tT4" customClass="Button" customModule="Memorie" customModuleProvider="target">
-                                                <rect key="frame" x="50" y="943" width="220" height="44"/>
+                                                <rect key="frame" x="50" y="942" width="220" height="44"/>
                                                 <color key="backgroundColor" red="0.84705882349999995" green="0.1215686275" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="PMH-Np-iuV"/>
@@ -327,7 +345,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="clickToCreateEvent:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="jo4-Kd-Tq9"/>
+                                                    <action selector="clickToPickDate:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="Mcm-CS-dem"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -374,13 +392,93 @@
                     </view>
                     <size key="freeformSize" width="320" height="1000"/>
                     <connections>
+                        <outlet property="CoverImage" destination="R4r-xQ-U19" id="wFy-bG-DXw"/>
+                        <outlet property="DateView" destination="XEg-Ag-rJ0" id="Y3S-AS-Uk4"/>
                         <outlet property="calendarTbl" destination="FFd-L5-uhh" id="reb-IP-scu"/>
                         <outlet property="constraintHeightCalendarTbl" destination="Npd-O2-2S8" id="Lck-6z-4PS"/>
+                        <outlet property="datePicker" destination="tEN-Dy-E4l" id="gPo-pp-TK9"/>
+                        <outlet property="eventTxtField" destination="Mx6-SN-cAG" id="IvA-Zs-u05"/>
+                        <outlet property="imgBtn" destination="RDg-Lf-8Xu" id="4nf-00-WnA"/>
+                        <outlet property="nameLabel" destination="0TV-e3-IdV" id="Sjb-uU-RKU"/>
                         <outlet property="receivedCV" destination="Hg8-4U-vNq" id="Sio-49-cwT"/>
                         <outlet property="sentCV" destination="hqM-Bd-Qah" id="rhZ-tW-HWw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XMr-cb-iW2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="XEg-Ag-rJ0">
+                    <rect key="frame" x="0.0" y="0.0" width="331" height="495"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="tEN-Dy-E4l">
+                            <rect key="frame" x="0.0" y="139.5" width="331" height="216"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="216" id="wDd-d3-ITx"/>
+                            </constraints>
+                            <connections>
+                                <action selector="DatePickerChanged:" destination="5vU-6e-0kQ" eventType="valueChanged" id="tfD-sX-tCR"/>
+                            </connections>
+                        </datePicker>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0G-qC-s7l">
+                            <rect key="frame" x="0.0" y="15" width="45" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="45" id="1OV-QV-nJt"/>
+                                <constraint firstAttribute="height" constant="40" id="NN3-GG-RJV"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="back_black"/>
+                            <connections>
+                                <action selector="hideDateView:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="dtx-Ro-UJk"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick A Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kyI-iu-ivg">
+                            <rect key="frame" x="22.5" y="120" width="65.5" height="14.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Event Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xox-93-29c">
+                            <rect key="frame" x="22.5" y="365.5" width="133.5" height="14.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mx6-SN-cAG">
+                            <rect key="frame" x="22.5" y="388" width="286" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUS-oC-rxb">
+                            <rect key="frame" x="274" y="15" width="45" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="NOP-KA-Gd1"/>
+                                <constraint firstAttribute="width" constant="45" id="S0o-JR-lJh"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Save"/>
+                            <connections>
+                                <action selector="SaveTapped:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="OCE-nq-gFK"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="J0G-qC-s7l" firstAttribute="top" secondItem="rd0-ql-Tte" secondAttribute="top" constant="15" id="CRr-SC-R1F"/>
+                        <constraint firstItem="tEN-Dy-E4l" firstAttribute="centerY" secondItem="rd0-ql-Tte" secondAttribute="centerY" id="H7D-md-AuT"/>
+                        <constraint firstItem="kyI-iu-ivg" firstAttribute="leading" secondItem="J0G-qC-s7l" secondAttribute="centerX" id="HsS-zb-HFY"/>
+                        <constraint firstItem="Mx6-SN-cAG" firstAttribute="top" secondItem="Xox-93-29c" secondAttribute="bottom" constant="8" id="Iok-dd-YY2"/>
+                        <constraint firstItem="tEN-Dy-E4l" firstAttribute="trailing" secondItem="rd0-ql-Tte" secondAttribute="trailing" id="NQ9-Cj-cRT"/>
+                        <constraint firstItem="tEN-Dy-E4l" firstAttribute="top" secondItem="kyI-iu-ivg" secondAttribute="bottom" constant="5" id="RE9-k1-sJ7"/>
+                        <constraint firstItem="dUS-oC-rxb" firstAttribute="centerY" secondItem="J0G-qC-s7l" secondAttribute="centerY" id="dEQ-o8-UtV"/>
+                        <constraint firstItem="Mx6-SN-cAG" firstAttribute="centerX" secondItem="rd0-ql-Tte" secondAttribute="centerX" id="dWS-Fk-Z4q"/>
+                        <constraint firstItem="Mx6-SN-cAG" firstAttribute="leading" secondItem="Xox-93-29c" secondAttribute="leading" id="gPn-Qx-Cii"/>
+                        <constraint firstItem="Xox-93-29c" firstAttribute="leading" secondItem="kyI-iu-ivg" secondAttribute="leading" id="hhg-yR-aAV"/>
+                        <constraint firstItem="rd0-ql-Tte" firstAttribute="trailing" secondItem="dUS-oC-rxb" secondAttribute="trailing" constant="12" id="nBO-KG-vRx"/>
+                        <constraint firstItem="J0G-qC-s7l" firstAttribute="leading" secondItem="tEN-Dy-E4l" secondAttribute="leading" id="tdv-ge-jBP"/>
+                        <constraint firstItem="Xox-93-29c" firstAttribute="top" secondItem="tEN-Dy-E4l" secondAttribute="bottom" constant="10" id="yax-B6-8zC"/>
+                        <constraint firstItem="tEN-Dy-E4l" firstAttribute="leading" secondItem="rd0-ql-Tte" secondAttribute="leading" id="z6v-MP-SLS"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="rd0-ql-Tte"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="64" y="102"/>
         </scene>
@@ -411,7 +509,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Vault" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C60-Y0-QFN" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="126.5" y="10" width="67" height="20"/>
+                                        <rect key="frame" x="129.5" y="10.5" width="61.5" height="19"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -563,7 +661,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCF-Hc-Leh" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
-                                <state key="normal" title="+ Add Image">
+                                <state key="normal" title="+ Add Memory">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -579,13 +677,19 @@
                                     <action selector="clickToAddImage:" destination="VSe-s2-xGh" eventType="touchUpInside" id="fak-Eg-ZLi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2g-jE-aWg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2g-jE-aWg" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="SKQ-Xd-Vak"/>
                                     <constraint firstAttribute="height" constant="40" id="UR0-Mu-zf8"/>
                                 </constraints>
                                 <state key="normal" image="back_black"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="clickToBack:" destination="VSe-s2-xGh" eventType="touchUpInside" id="i6k-av-5st"/>
                                 </connections>
@@ -594,7 +698,7 @@
                                 <rect key="frame" x="20" y="240" width="280" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select A Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynB-hG-FuC" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="17.5" width="115.5" height="21.5"/>
+                                        <rect key="frame" x="15" y="18" width="110" height="21"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                                         <color key="textColor" red="0.41176470590000003" green="0.4039215686" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -609,7 +713,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a date that this message can be unlocked." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPw-c2-aUe" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="39" width="228" height="29"/>
+                                        <rect key="frame" x="15" y="39" width="228" height="28"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -624,7 +728,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuL-sP-Q5w">
-                                        <rect key="frame" x="253" y="24" width="12" height="22"/>
+                                        <rect key="frame" x="253" y="14" width="12" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="he0-9h-O60"/>
                                         </constraints>
@@ -662,7 +766,7 @@
                                 <rect key="frame" x="20" y="330" width="280" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select A Recipient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHy-1L-aOm" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="17.5" width="155" height="21.5"/>
+                                        <rect key="frame" x="15" y="18" width="148" height="21"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                                         <color key="textColor" red="0.41176470590000003" green="0.4039215686" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -677,7 +781,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select who can view this." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Oq-kz-Jag" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="39" width="143" height="15"/>
+                                        <rect key="frame" x="15" y="39" width="136" height="14"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -692,7 +796,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9LL-eC-tqZ">
-                                        <rect key="frame" x="253" y="24" width="12" height="22"/>
+                                        <rect key="frame" x="241" y="14" width="24" height="42"/>
                                         <state key="normal" image="right_arrow"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTe-nP-CYn">
