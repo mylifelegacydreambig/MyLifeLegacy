@@ -83,6 +83,8 @@ var createdAt: String
 var lastEdited: String
 var postType: String
 var description: String
+var receivername: String
+var sendername: String
 }
 
 

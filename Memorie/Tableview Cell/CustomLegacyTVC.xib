@@ -158,6 +158,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.1764705882" green="0.50588235290000005" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="like"/>
+                                        <connections>
+                                            <action selector="likeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="stj-An-GDQ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vc7-rA-UIB">
                                         <rect key="frame" x="260" y="1" width="30" height="39"/>
@@ -167,7 +170,7 @@
                                         <color key="tintColor" red="0.1764705882352941" green="0.50588235294117645" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="more_horiz"/>
                                         <connections>
-                                            <action selector="MoreBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yAg-7t-yP4"/>
+                                            <action selector="subscribeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3uf-W5-bS0"/>
                                         </connections>
                                     </button>
                                 </subviews>

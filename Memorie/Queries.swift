@@ -435,7 +435,7 @@ func SearchUsersNext(searchString: String, methodhandler: @escaping MethodHandle
     defineAppSyncSource()
     
     
-    appSyncClient?.fetch(query: SearchUsersQuery(SortKey: "basedata", SearchString: searchString.lowercased(), limit: 100, nextToken: Token_arrUsers), cachePolicy: .returnCacheDataElseFetch)  { (result, error) in
+    appSyncClient?.fetch(query: SearchUsersQuery(SortKey: "basedata", SearchString: searchString.lowercased(), limit: 100, nextToken: Token_arrUsers), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
         
        if error != nil {
             print(error?.localizedDescription ?? "")
@@ -608,7 +608,9 @@ func FetchMessageVaults(username: String, methodhandler: @escaping MethodHandler
                                             createdAt: (each?.createdAt)!,
                                             lastEdited: (each?.lastEdited)!,
                                             postType: (each?.postType)!,
-                                            description: (each?.description)!))
+                                            description: (each?.description)!,
+                                            receivername: (each?.receivername)!,
+                                            sendername: (each?.sendername)!))
                            
         
         }
@@ -651,17 +653,19 @@ func FetchMessageVaultsNext( username: String, methodhandler: @escaping MethodHa
           for each in (result?.data?.fetchMessageVaults?.items)!{
                   
               arrMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-              sortKey: (each?.sortKey)!,
-              mediaURL: (each?.mediaUrl)!,
-              canBeOpenedOn: (each?.canBeOpenedOn)!,
-              isLocked: (each?.isLocked)!,
-              searchString: (each?.searchString)!,
-              postedBy: (each?.postedBy)!,
-              receivedBy: (each?.receivedBy)!,
-              createdAt: (each?.createdAt)!,
-              lastEdited: (each?.lastEdited)!,
-              postType: (each?.postType)!,
-              description: (each?.description)!))
+                           sortKey: (each?.sortKey)!,
+                           mediaURL: (each?.mediaUrl)!,
+                           canBeOpenedOn: (each?.canBeOpenedOn)!,
+                           isLocked: (each?.isLocked)!,
+                           searchString: (each?.searchString)!,
+                           postedBy: (each?.postedBy)!,
+                           receivedBy: (each?.receivedBy)!,
+                           createdAt: (each?.createdAt)!,
+                           lastEdited: (each?.lastEdited)!,
+                           postType: (each?.postType)!,
+                           description: (each?.description)!,
+              receivername: (each?.receivername)!,
+              sendername: (each?.sendername)!))
                   
               }
         
@@ -698,17 +702,19 @@ func FetchReceivedMessageVaults(username: String, methodhandler: @escaping Metho
             print("SAVED WORDS DID WORK!")
             
        arrReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-       sortKey: (each?.sortKey)!,
-       mediaURL: (each?.mediaUrl)!,
-       canBeOpenedOn: (each?.canBeOpenedOn)!,
-       isLocked: (each?.isLocked)!,
-       searchString: (each?.searchString)!,
-       postedBy: (each?.postedBy)!,
-       receivedBy: (each?.receivedBy)!,
-       createdAt: (each?.createdAt)!,
-       lastEdited: (each?.lastEdited)!,
-       postType: (each?.postType)!,
-       description: (each?.description)!))
+                    sortKey: (each?.sortKey)!,
+                    mediaURL: (each?.mediaUrl)!,
+                    canBeOpenedOn: (each?.canBeOpenedOn)!,
+                    isLocked: (each?.isLocked)!,
+                    searchString: (each?.searchString)!,
+                    postedBy: (each?.postedBy)!,
+                    receivedBy: (each?.receivedBy)!,
+                    createdAt: (each?.createdAt)!,
+                    lastEdited: (each?.lastEdited)!,
+                    postType: (each?.postType)!,
+                    description: (each?.description)!,
+       receivername: (each?.receivername)!,
+       sendername: (each?.sendername)!))
                            
         
         }
@@ -751,18 +757,19 @@ func FetchReceivedMessageVaultsNext( username: String, methodhandler: @escaping 
           for each in (result?.data?.fetchMessageVaults?.items)!{
                   
               arrReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-              sortKey: (each?.sortKey)!,
-              mediaURL: (each?.mediaUrl)!,
-              canBeOpenedOn: (each?.canBeOpenedOn)!,
-              isLocked: (each?.isLocked)!,
-              searchString: (each?.searchString)!,
-              postedBy: (each?.postedBy)!,
-              receivedBy: (each?.receivedBy)!,
-              createdAt: (each?.createdAt)!,
-              lastEdited: (each?.lastEdited)!,
-              postType: (each?.postType)!,
-              description: (each?.description)!))
-                  
+                           sortKey: (each?.sortKey)!,
+                           mediaURL: (each?.mediaUrl)!,
+                           canBeOpenedOn: (each?.canBeOpenedOn)!,
+                           isLocked: (each?.isLocked)!,
+                           searchString: (each?.searchString)!,
+                           postedBy: (each?.postedBy)!,
+                           receivedBy: (each?.receivedBy)!,
+                           createdAt: (each?.createdAt)!,
+                           lastEdited: (each?.lastEdited)!,
+                           postType: (each?.postType)!,
+                           description: (each?.description)!,
+              receivername: (each?.receivername)!,
+              sendername: (each?.sendername)!))
               }
         
         methodhandler()
@@ -797,19 +804,19 @@ func SearchMessageVaults(username: String, searchstring: String, methodhandler: 
             print("SAVED WORDS DID WORK!")
             
        arrSearchMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-       sortKey: (each?.sortKey)!,
-       mediaURL: (each?.mediaUrl)!,
-       canBeOpenedOn: (each?.canBeOpenedOn)!,
-       isLocked: (each?.isLocked)!,
-       searchString: (each?.searchString)!,
-       postedBy: (each?.postedBy)!,
-       receivedBy: (each?.receivedBy)!,
-       createdAt: (each?.createdAt)!,
-       lastEdited: (each?.lastEdited)!,
-       postType: (each?.postType)!,
-       description: (each?.description)!))
-                           
-        
+                    sortKey: (each?.sortKey)!,
+                    mediaURL: (each?.mediaUrl)!,
+                    canBeOpenedOn: (each?.canBeOpenedOn)!,
+                    isLocked: (each?.isLocked)!,
+                    searchString: (each?.searchString)!,
+                    postedBy: (each?.postedBy)!,
+                    receivedBy: (each?.receivedBy)!,
+                    createdAt: (each?.createdAt)!,
+                    lastEdited: (each?.lastEdited)!,
+                    postType: (each?.postType)!,
+                    description: (each?.description)!,
+       receivername: (each?.receivername)!,
+       sendername: (each?.sendername)!))
         }
         
         Token_arrSearchMessageVaults = result?.data?.searchMessageVaults?.nextToken
@@ -850,18 +857,19 @@ func SearchMessageVaultsNext( username: String, searchstring: String, methodhand
           for each in (result?.data?.searchMessageVaults?.items)!{
                   
               arrSearchMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-              sortKey: (each?.sortKey)!,
-              mediaURL: (each?.mediaUrl)!,
-              canBeOpenedOn: (each?.canBeOpenedOn)!,
-              isLocked: (each?.isLocked)!,
-              searchString: (each?.searchString)!,
-              postedBy: (each?.postedBy)!,
-              receivedBy: (each?.receivedBy)!,
-              createdAt: (each?.createdAt)!,
-              lastEdited: (each?.lastEdited)!,
-              postType: (each?.postType)!,
-              description: (each?.description)!))
-                  
+                           sortKey: (each?.sortKey)!,
+                           mediaURL: (each?.mediaUrl)!,
+                           canBeOpenedOn: (each?.canBeOpenedOn)!,
+                           isLocked: (each?.isLocked)!,
+                           searchString: (each?.searchString)!,
+                           postedBy: (each?.postedBy)!,
+                           receivedBy: (each?.receivedBy)!,
+                           createdAt: (each?.createdAt)!,
+                           lastEdited: (each?.lastEdited)!,
+                           postType: (each?.postType)!,
+                           description: (each?.description)!,
+              receivername: (each?.receivername)!,
+              sendername: (each?.sendername)!))
               }
         
         methodhandler()
@@ -897,18 +905,19 @@ func SearchReceivedMessageVaults(username: String, searchstring: String, methodh
             print("SAVED WORDS DID WORK!")
             
        arrSearchReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-       sortKey: (each?.sortKey)!,
-       mediaURL: (each?.mediaUrl)!,
-       canBeOpenedOn: (each?.canBeOpenedOn)!,
-       isLocked: (each?.isLocked)!,
-       searchString: (each?.searchString)!,
-       postedBy: (each?.postedBy)!,
-       receivedBy: (each?.receivedBy)!,
-       createdAt: (each?.createdAt)!,
-       lastEdited: (each?.lastEdited)!,
-       postType: (each?.postType)!,
-       description: (each?.description)!))
-                           
+                    sortKey: (each?.sortKey)!,
+                    mediaURL: (each?.mediaUrl)!,
+                    canBeOpenedOn: (each?.canBeOpenedOn)!,
+                    isLocked: (each?.isLocked)!,
+                    searchString: (each?.searchString)!,
+                    postedBy: (each?.postedBy)!,
+                    receivedBy: (each?.receivedBy)!,
+                    createdAt: (each?.createdAt)!,
+                    lastEdited: (each?.lastEdited)!,
+                    postType: (each?.postType)!,
+                    description: (each?.description)!,
+       receivername: (each?.receivername)!,
+       sendername: (each?.sendername)!))
         
         }
         
@@ -950,18 +959,19 @@ func SearchReceivedMessageVaultsNext( username: String, searchstring: String, me
           for each in (result?.data?.searchMessageVaults?.items)!{
                   
               arrSearchReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
-              sortKey: (each?.sortKey)!,
-              mediaURL: (each?.mediaUrl)!,
-              canBeOpenedOn: (each?.canBeOpenedOn)!,
-              isLocked: (each?.isLocked)!,
-              searchString: (each?.searchString)!,
-              postedBy: (each?.postedBy)!,
-              receivedBy: (each?.receivedBy)!,
-              createdAt: (each?.createdAt)!,
-              lastEdited: (each?.lastEdited)!,
-              postType: (each?.postType)!,
-              description: (each?.description)!))
-                  
+                           sortKey: (each?.sortKey)!,
+                           mediaURL: (each?.mediaUrl)!,
+                           canBeOpenedOn: (each?.canBeOpenedOn)!,
+                           isLocked: (each?.isLocked)!,
+                           searchString: (each?.searchString)!,
+                           postedBy: (each?.postedBy)!,
+                           receivedBy: (each?.receivedBy)!,
+                           createdAt: (each?.createdAt)!,
+                           lastEdited: (each?.lastEdited)!,
+                           postType: (each?.postType)!,
+                           description: (each?.description)!,
+              receivername: (each?.receivername)!,
+              sendername: (each?.sendername)!))
               }
         
         methodhandler()

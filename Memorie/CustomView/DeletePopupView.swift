@@ -19,12 +19,13 @@ class DeletePopupView: UIView {
    }
    
    @IBAction func clickToClose(_ sender: Any) {
-       self.removeFromSuperview()
+       self.isHidden = true
    }
    
    
    @IBAction func clickToDelete(_ sender: Any) {
-       self.removeFromSuperview()
+       self.isHidden = true
+
    }
 
     /*

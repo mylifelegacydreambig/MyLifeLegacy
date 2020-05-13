@@ -42,7 +42,11 @@ class FriendProfileVC: UIViewController, LightboxControllerPageDelegate, Lightbo
     }
     
     @IBAction func clickToCloud(_ sender: Any) {
-        
+        directsend = true
+        selectedfriend = friend.primaryKey
+        selectedfriendname = friend.firstName
+               let vc : AddVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "AddVaultVC") as! AddVaultVC
+               self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func BlockFriend(_ sender: Any) {

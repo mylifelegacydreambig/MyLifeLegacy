@@ -14,12 +14,19 @@ import AVFoundation
 import AVKit
 
 var selectedfriend: String! = "n/a"
+var selectedfriendname: String! = "n/a"
+
+var directsend: Bool = false
+
+
 class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDelegate, LightboxControllerDismissalDelegate {
     @IBAction func SelectFriends(_ sender: Any) {
+        if directsend == false{
+        
         AppDelegate().sharedDelegate().removeLoader()
            let vc : ChooseFriendsVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "ChooseFriendsVC") as! ChooseFriendsVC
                 self.navigationController?.pushViewController(vc, animated: true)
-                
+        }
     }
     
         @IBOutlet weak var descTxtView: TextView!
@@ -34,7 +41,8 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
                                                                receivedBy: "n/a",
                                                                createdAt: String(Int(Date().timeIntervalSince1970)),
                                                                lastEdited: String(Int(Date().timeIntervalSince1970)),
-                                                               postType: "IMAGE", description: "n/a")
+                                                               postType: "IMAGE", description: "n/a",
+                                                               sendername: me[0].firstName, receivername: "n/a")
     
   
     
@@ -56,14 +64,18 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
 
     override func viewDidAppear(_ animated: Bool) {
         SetLabels()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if directsend == false {
       selectedfriend = "n/a"
+        }
       displaySubViewtoParentView(self.view, subview: DateView)
       DateView.isHidden = true
         SetLabels()
+        
         
     }
     
@@ -72,8 +84,9 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
         if selectedfriend == "n/a" {
             RecipientLbl.text = "Select A Recipient"
         } else {
-            RecipientLbl.text = selectedfriend
+            RecipientLbl.text = selectedfriendname
             newvaultmessage.receivedBy = selectedfriend
+            newvaultmessage.receivername = selectedfriendname
         }
     }
 
@@ -125,9 +138,8 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
                newvaultmessage.description = descTxtView.text
            }
        
-        newvaultmessage.receivedBy = RecipientLbl.text
         newvaultmessage.mediaUrl =  self.newvaultmessage.createdAt!+".jpg"
-        let arr: [String] = [newvaultmessage.receivedBy!,newvaultmessage.description!,newvaultmessage.postedBy!]
+        let arr: [String] = [newvaultmessage.sendername!,newvaultmessage.description!,newvaultmessage.receivername!]
         newvaultmessage.searchString = arr.joined().lowercased()
         
         AppDelegate().sharedDelegate().showLoader()
@@ -143,7 +155,9 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
                                                         createdAt: newvaultmessage.createdAt!,
                                                         lastEdited: newvaultmessage.lastEdited!,
                                                         postType: newvaultmessage.postType!,
-                                                        description: newvaultmessage.description!)
+                                                        description: newvaultmessage.description!,
+                                                        receivername: newvaultmessage.receivername!,
+                                                        sendername: newvaultmessage.sendername!)
         
         arrSearchMessageVaults.append(mymessagevault)
         arrMessageVaults.append(mymessagevault)

@@ -15,10 +15,70 @@ import AVFoundation
 import AVKit
 import DropDown
 
-class MyVaultVC: UIViewController,LightboxControllerPageDelegate, LightboxControllerDismissalDelegate, UITextFieldDelegate {
+class MyVaultVC: UIViewController,LightboxControllerPageDelegate, LightboxControllerDismissalDelegate, UITextFieldDelegate, YoutuberTableViewCellDelegate {
     
     @IBOutlet weak var eventTxtField: UITextField!
+    var currentmessagevault: messagevault!
+       var sortKey: String!
+         func youtuberTableViewCell(_ youtuberTableViewCell: CustomVideoCVC, subscribeButtonTappedFor youtuber: String) {
+       
+           DeletePopup.isHidden = false
+           
+            if youtuber.hasPrefix("sentCV"){
+                sortKey = youtuber.components(separatedBy: "sentCV").last!
+                activeCollectionView = sentCV
+            } else {
+               sortKey = youtuber.components(separatedBy: "receivedCV").last!
+                activeCollectionView = receivedCV
+                
+            }
+            
+
+           
+           
+         }
     
+    
+    var activeCollectionView: UICollectionView!
+      
+      func Delete(){
+              
+        if activeCollectionView == sentCV{
+        
+        
+          if let index = arrMessageVaults.index(where: { $0.sortKey == sortKey}) {
+            
+            let finaldata: messagevault = arrMessageVaults[index]
+                        DispatchQueue.main.async{
+                          
+                            let inputA: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.postedBy+"-sent", sortKey: finaldata.sortKey)
+                            
+                            let inputB: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.receivedBy+"-received", sortKey: finaldata.sortKey)
+                            
+                            
+                            DeleteMessageVault(input: inputA, methodhandler: Dummy)
+                            
+                            DeleteMessageVault(input: inputB, methodhandler: Dummy)
+                                        
+                arrMessageVaults.remove(at: index)
+                     }
+           
+          
+          DeletePopup.isHidden = true
+
+          sentCV.reloadData()
+      }
+        }
+        
+    }
+    
+    @IBOutlet var DeletePopup: DeletePopupView!
+       
+        @IBAction func HideDeleteView(_ sender: Any) {
+            DeletePopup.isHidden = true
+        }
+        
+       
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
@@ -202,8 +262,14 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
         receivedCV.reloadData()
     }
     
+       @IBAction func DeleteTapped(_ sender: Any) {
+           Delete()
+           
+       }
     override func viewDidLoad() {
         super.viewDidLoad()
+        displaySubViewtoParentView(self.view, subview: DeletePopup)
+                  DeletePopup.isHidden = true
         self.hideKeyboard()
          username = globalusername
       downloadcoverimage()
@@ -233,7 +299,7 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
 
     
     @IBAction func clickToSeeAllReceived(_ sender: Any) {
-        let vc : SentVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "SentVaultVC") as! SentVaultVC
+        let vc : ReceivedVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "ReceivedVaultVC") as! ReceivedVaultVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -358,7 +424,7 @@ extension MyVaultVC : UITableViewDelegate, UITableViewDataSource {
         
         
         var calendar = Calendar(identifier: .gregorian)
-        let arr: [String] = (eventTxtField.text?.components(separatedBy: "-"))!
+        let arr: [String] = (calendarevent.eventDate!.components(separatedBy: "-"))
         
         if let month = Int(arr[0]) {
             
@@ -406,6 +472,62 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
      }
     
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == sentCV{
+              let finaldata : messagevault = arrMessageVaults[indexPath.row]
+               let username = finaldata.postedBy
+                   let key =  username+"/vaults/" + finaldata.mediaURL
+              if finaldata.postType == "IMAGE"{
+                  let images = [
+                    LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                                  text: "For " + finaldata.receivername + " | " + finaldata.description)
+                  ]
+
+                  // Create an instance of LightboxController.
+                  let controller = LightboxController(images: images)
+
+                  // Set delegates.
+                  controller.pageDelegate = self
+                  controller.dismissalDelegate = self
+
+                  // Use dynamic background.
+                  controller.dynamicBackground = true
+
+                  // Present your controller.
+                  present(controller, animated: true, completion: nil)
+                  
+              } else {
+                  
+                  
+                  let images = [
+                              LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                                             text: "For " + finaldata.receivername + " | " + finaldata.description,
+                                            videoURL: URL(string: API.CLOUDFRONT_URL+"users/"+key.replacingOccurrences(of: ".jpg", with: ".mp4")))
+                            ]
+
+         // Create an instance of LightboxController.
+         let controller = LightboxController(images: images)
+
+         // Set delegates.
+         controller.pageDelegate = self
+         controller.dismissalDelegate = self
+
+         // Use dynamic background.
+         controller.dynamicBackground = true
+
+         // Present your controller.
+         present(controller, animated: true, completion: nil)
+         
+                  
+              }
+              
+             
+
+              
+        }
+          }
+       
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == receivedCV {
             return arrReceivedMessageVaults.count
@@ -415,6 +537,8 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
 
         }
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 130, height: 180)
@@ -426,7 +550,8 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
             let cell : CustomVideoCVC = receivedCV.dequeueReusableCell(withReuseIdentifier: "CustomVideoCVC", for: indexPath) as! CustomVideoCVC
             
             let finaldata: messagevault = arrReceivedMessageVaults[indexPath.row]
-                      
+                      cell.delegate = self
+                             cell.youtuber = "receivedCV" + finaldata.sortKey
             cell.playBtn.isHidden = true
             cell.vaultView.isHidden = true
             
@@ -438,17 +563,28 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
                  cell.playBtn.isHidden = false
             }
             
-            cell.nameLbl.text = finaldata.postedBy
+            cell.nameLbl.text = finaldata.sendername
             cell.moreBtn.tag = indexPath.row
             cell.moreBtn.addTarget(self, action: #selector(clickToVaultMore(_:)), for: .touchUpInside)
             return cell
         }
         else {
             let cell : CustomVideoCVC = sentCV.dequeueReusableCell(withReuseIdentifier: "CustomVideoCVC", for: indexPath) as! CustomVideoCVC
-            
+      
             let finaldata: messagevault = arrMessageVaults[indexPath.row]
+            cell.delegate = self
+            cell.youtuber = "sentCV" + finaldata.sortKey
             cell.playBtn.isHidden = true
             cell.vaultView.isHidden = true
+            
+                let username = finaldata.postedBy
+                let key =  username+"/vaults/" + finaldata.mediaURL
+                let url = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: key, height: Int(cell.frame.height), width: Int(cell.frame.width))
+              
+               cell.ImgView.setImageFromURL(url: url)
+                cell.vaultView.isHidden = true
+            
+            
             if Int(finaldata.canBeOpenedOn)! > Int(Date().timeIntervalSince1970) {
                          cell.vaultView.isHidden = false
                     cell.AccessLabel.text = "Can be accessed by user on " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn)
@@ -456,7 +592,7 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
                          cell.playBtn.isHidden = false
                     }
                     
-             cell.nameLbl.text = finaldata.receivedBy
+             cell.nameLbl.text = finaldata.receivername
             cell.moreBtn.tag = indexPath.row
             cell.moreBtn.addTarget(self, action: #selector(clickToVaultMore(_:)), for: .touchUpInside)
             return cell
@@ -464,10 +600,10 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
     
     @IBAction func clickToVaultMore(_ sender: UIButton) {
-        
-        let view : DeletePopupView = DeletePopupView().loadNib() as! DeletePopupView
-        view.frame = self.view.frame
-        self.view.addSubview(view)
+//
+//        let view : DeletePopupView = DeletePopupView().loadNib() as! DeletePopupView
+//        view.frame = self.view.frame
+//        self.view.addSubview(view)
     }
 }
 

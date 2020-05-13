@@ -300,43 +300,13 @@ extension String {
     }
 }
 func TimeExtractorForChat(timestamp: String) -> String{
-    let timestringms: String = timestamp
-    
-    var time:String!
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = DateFormatter.Style.short
-    
-    let currentdate = Date()
-    let currenttimestamp = Int(currentdate.timeIntervalSince1970)
-    let currentdatestring = dateFormatter.string(from: currentdate)
-    
-    let start = timestringms.index(timestringms.startIndex, offsetBy: 0)
-    let end = timestringms.index(timestringms.endIndex, offsetBy: -3)
-    let range = start..<end
-    
-    let mySubstring = timestringms[range]  // play
-    var timestring: Int! = Int(String(mySubstring))
-    
-    
-    let timenow = Int(currentdate.timeIntervalSince1970)
-    let newdate = Date(timeIntervalSince1970: Double(timestring))
-    let olddatestring = dateFormatter.string(from: newdate)
-    
-    if olddatestring == currentdatestring{
-        let newdateFormatter = DateFormatter()
-        newdateFormatter.timeStyle = DateFormatter.Style.short
-        newdateFormatter.timeZone = .current
-        time = newdateFormatter.string(from: newdate)
-        
-    } else {
-        dateFormatter.timeStyle = DateFormatter.Style.short
-        dateFormatter.timeZone = .current
-        time = dateFormatter.string(from: newdate)
-        
-    }
-    
-    
-    return time
+    let date = Date(timeIntervalSince1970: Double(Int(timestamp)!))
+          
+       let dateFormatter = DateFormatter()
+       dateFormatter.dateStyle = DateFormatter.Style.short
+       //dateFormatter.timeStyle = DateFormatter.Style.short
+       let localDate = dateFormatter.string(from: date)
+    return localDate
     
 }
 

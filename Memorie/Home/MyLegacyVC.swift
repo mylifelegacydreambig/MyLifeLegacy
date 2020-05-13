@@ -16,16 +16,74 @@ import DropDown
 
 var isViewingMyProfile: Bool! = true
 
-class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate, CustomLegacyCellDelegate {
+    var currentmessagevault: messagevault!
+    var sortKey: String!
+    
+    
+      func Delete(){
+                      
+          if let index = currentPosts.index(where: { $0.sortKey == sortKey}) {
+            
+            let finaldata: post = currentPosts[index]
+                        DispatchQueue.main.async{
+                          
+                            let inputA: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.primaryKey, sortKey: finaldata.sortKey)
+                      
+                            
+                            DeletePost(input: inputA, methodhandler: Dummy)
+                        
+                                        
+                            self.currentPosts.remove(at: index)
+                     }
+           
+          
+          DeletePopup.isHidden = true
+
+          tblView.reloadData()
+      }
+        
+        if let index = arrPosts.index(where: { $0.sortKey == sortKey}) {
+                  
+                  let finaldata: post = arrPosts[index]
+                              DispatchQueue.main.async{
+                                
+                                              
+                                  arrPosts.remove(at: index)
+                           }
+                 
+                
+
+            }
+        
+        
+    }
+    
+    @IBAction func DeleteTapped(_ sender: Any) {
+        Delete()
+    }
+    @IBOutlet var DeletePopup: DeletePopupView!
+       
+        @IBAction func HideDeleteView(_ sender: Any) {
+            DeletePopup.isHidden = true
+        }
+        
+    
+    func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, subscribeButtonTappedFor youtuber: String) {
+        DeletePopup.isHidden = false
+        sortKey = youtuber
+    }
+    
+    func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, likeButtonTappedFor like: String) {
+     //   CreateReaction(input: input, methodhandler: FinishLiking)
+    }
+    
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
     }
     
     
     func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
     }
-    
-    
-
     
     
     @IBOutlet var headerView: View!
@@ -75,6 +133,8 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
     var currentPosts: [post] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        displaySubViewtoParentView(self.view, subview: DeletePopup)
+            DeletePopup.isHidden = true
         isViewingMyProfile = true
         username = currentuser.primaryKey
         LoadPosts()
@@ -183,6 +243,10 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
         cell.CategoriesLbl.text = finaldata.categories.replacingOccurrences(of: ",", with: " #").lowercased()
         cell.CategoriesLbl.text = "#"+cell.CategoriesLbl.text!
         cell.selectionStyle = .none
+        
+        cell.delegate = self
+        cell.youtuber = finaldata.sortKey
+        cell.like = globalusername
         return cell
     }
     

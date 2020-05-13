@@ -145,6 +145,7 @@ extension ChooseFriendsVC : UITableViewDelegate, UITableViewDataSource {
         let finaldata: invitation = arrInvitations[indexPath.row]
         
         selectedfriend = finaldata.sortKey
+        selectedfriendname = finaldata.firstName
         self.navigationController?.popViewController(animated: true)
 
     }
