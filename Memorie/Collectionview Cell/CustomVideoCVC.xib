@@ -110,6 +110,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
+                <outlet property="AccessLabel" destination="7QF-Rl-uus" id="aVL-Ud-tUN"/>
                 <outlet property="moreBtn" destination="U4a-iF-OZq" id="Vjv-Rp-5S7"/>
                 <outlet property="nameLbl" destination="vLU-Vs-cG4" id="9SL-fa-3IC"/>
                 <outlet property="playBtn" destination="E61-dc-ady" id="aDR-G6-2Sa"/>

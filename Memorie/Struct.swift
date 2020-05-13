@@ -81,6 +81,8 @@ var postedBy: String
 var receivedBy: String
 var createdAt: String
 var lastEdited: String
+var postType: String
+var description: String
 }
 
 
@@ -101,3 +103,5 @@ var arrUserPosts: [post] = []
 var arrSearchUserPosts: [post] = []
 var friend: invitation!
 var arrCalendars: [calendar] = []
+var arrSearchMessageVaults: [messagevault] = []
+var arrSearchReceivedMessageVaults: [messagevault] = []

@@ -570,3 +570,402 @@ func FetchCalendarsNext( username: String, methodhandler: @escaping MethodHandle
     
 }
 
+
+
+
+var Token_arrMessageVaults: String!
+
+func FetchMessageVaults(username: String, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+    Token_arrMessageVaults = " "
+    appSyncClient?.fetch(query: FetchMessageVaultsQuery(PrimaryKey: username+"-sent", limit: 10), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+      if error != nil {
+            print(error?.localizedDescription ?? "")
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        arrMessageVaults.removeAll()
+        
+        
+        for each in (result?.data?.fetchMessageVaults?.items)!{
+            print("SAVED WORDS DID WORK!")
+            
+       arrMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+                                            sortKey: (each?.sortKey)!,
+                                            mediaURL: (each?.mediaUrl)!,
+                                            canBeOpenedOn: (each?.canBeOpenedOn)!,
+                                            isLocked: (each?.isLocked)!,
+                                            searchString: (each?.searchString)!,
+                                            postedBy: (each?.postedBy)!,
+                                            receivedBy: (each?.receivedBy)!,
+                                            createdAt: (each?.createdAt)!,
+                                            lastEdited: (each?.lastEdited)!,
+                                            postType: (each?.postType)!,
+                                            description: (each?.description)!))
+                           
+        
+        }
+        
+        Token_arrMessageVaults = result?.data?.fetchMessageVaults?.nextToken
+        
+    
+        methodhandler()
+        
+        
+    }
+    
+}
+
+
+func FetchMessageVaultsNext( username: String, methodhandler: @escaping MethodHandler){
+    guard Token_arrMessageVaults != nil else {
+        return
+    }
+    defineAppSyncSource()
+    
+    
+    appSyncClient?.fetch(query: FetchMessageVaultsQuery(PrimaryKey: username+"-sent", limit: 100, nextToken: Token_arrMessageVaults), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+       if error != nil {
+            print(error?.localizedDescription ?? "")
+                       displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+                      displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        Token_arrMessageVaults = result?.data?.fetchMessageVaults?.nextToken
+        print("NEXT TOKEN")
+        
+          for each in (result?.data?.fetchMessageVaults?.items)!{
+                  
+              arrMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+              sortKey: (each?.sortKey)!,
+              mediaURL: (each?.mediaUrl)!,
+              canBeOpenedOn: (each?.canBeOpenedOn)!,
+              isLocked: (each?.isLocked)!,
+              searchString: (each?.searchString)!,
+              postedBy: (each?.postedBy)!,
+              receivedBy: (each?.receivedBy)!,
+              createdAt: (each?.createdAt)!,
+              lastEdited: (each?.lastEdited)!,
+              postType: (each?.postType)!,
+              description: (each?.description)!))
+                  
+              }
+        
+        methodhandler()
+        
+    }
+    
+}
+
+
+
+var Token_arrReceivedMessageVaults: String!
+
+func FetchReceivedMessageVaults(username: String, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+    Token_arrReceivedMessageVaults = " "
+    appSyncClient?.fetch(query: FetchMessageVaultsQuery(PrimaryKey: username+"-received", limit: 10), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+      if error != nil {
+            print(error?.localizedDescription ?? "")
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        arrReceivedMessageVaults.removeAll()
+        
+        
+        for each in (result?.data?.fetchMessageVaults?.items)!{
+            print("SAVED WORDS DID WORK!")
+            
+       arrReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+       sortKey: (each?.sortKey)!,
+       mediaURL: (each?.mediaUrl)!,
+       canBeOpenedOn: (each?.canBeOpenedOn)!,
+       isLocked: (each?.isLocked)!,
+       searchString: (each?.searchString)!,
+       postedBy: (each?.postedBy)!,
+       receivedBy: (each?.receivedBy)!,
+       createdAt: (each?.createdAt)!,
+       lastEdited: (each?.lastEdited)!,
+       postType: (each?.postType)!,
+       description: (each?.description)!))
+                           
+        
+        }
+        
+        Token_arrReceivedMessageVaults = result?.data?.fetchMessageVaults?.nextToken
+        
+    
+        methodhandler()
+        
+        
+    }
+    
+}
+
+
+func FetchReceivedMessageVaultsNext( username: String, methodhandler: @escaping MethodHandler){
+    guard Token_arrReceivedMessageVaults != nil else {
+        return
+    }
+    defineAppSyncSource()
+    
+    
+    appSyncClient?.fetch(query: FetchMessageVaultsQuery(PrimaryKey: username+"-received", limit: 100, nextToken: Token_arrReceivedMessageVaults), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+       if error != nil {
+            print(error?.localizedDescription ?? "")
+                       displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+                      displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        Token_arrReceivedMessageVaults = result?.data?.fetchMessageVaults?.nextToken
+        print("NEXT TOKEN")
+        
+          for each in (result?.data?.fetchMessageVaults?.items)!{
+                  
+              arrReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+              sortKey: (each?.sortKey)!,
+              mediaURL: (each?.mediaUrl)!,
+              canBeOpenedOn: (each?.canBeOpenedOn)!,
+              isLocked: (each?.isLocked)!,
+              searchString: (each?.searchString)!,
+              postedBy: (each?.postedBy)!,
+              receivedBy: (each?.receivedBy)!,
+              createdAt: (each?.createdAt)!,
+              lastEdited: (each?.lastEdited)!,
+              postType: (each?.postType)!,
+              description: (each?.description)!))
+                  
+              }
+        
+        methodhandler()
+        
+    }
+    
+}
+
+
+var Token_arrSearchMessageVaults: String!
+
+func SearchMessageVaults(username: String, searchstring: String, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+    Token_arrSearchMessageVaults = " "
+    appSyncClient?.fetch(query: SearchMessageVaultsQuery(PrimaryKey: username+"-sent", SearchString: searchstring.lowercased(), limit: 20), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+      if error != nil {
+            print(error?.localizedDescription ?? "")
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        arrSearchMessageVaults.removeAll()
+        
+        
+        for each in (result?.data?.searchMessageVaults?.items)!{
+            print("SAVED WORDS DID WORK!")
+            
+       arrSearchMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+       sortKey: (each?.sortKey)!,
+       mediaURL: (each?.mediaUrl)!,
+       canBeOpenedOn: (each?.canBeOpenedOn)!,
+       isLocked: (each?.isLocked)!,
+       searchString: (each?.searchString)!,
+       postedBy: (each?.postedBy)!,
+       receivedBy: (each?.receivedBy)!,
+       createdAt: (each?.createdAt)!,
+       lastEdited: (each?.lastEdited)!,
+       postType: (each?.postType)!,
+       description: (each?.description)!))
+                           
+        
+        }
+        
+        Token_arrSearchMessageVaults = result?.data?.searchMessageVaults?.nextToken
+        
+    
+        methodhandler()
+        
+        
+    }
+    
+}
+
+
+func SearchMessageVaultsNext( username: String, searchstring: String, methodhandler: @escaping MethodHandler){
+    guard Token_arrSearchMessageVaults != nil else {
+        return
+    }
+    defineAppSyncSource()
+    
+    
+    appSyncClient?.fetch(query: SearchMessageVaultsQuery(PrimaryKey: username+"-sent", SearchString: searchstring.lowercased(), limit: 20, nextToken: Token_arrSearchMessageVaults), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+       if error != nil {
+            print(error?.localizedDescription ?? "")
+                       displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+                      displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        Token_arrSearchMessageVaults = result?.data?.searchMessageVaults?.nextToken
+        print("NEXT TOKEN")
+        
+          for each in (result?.data?.searchMessageVaults?.items)!{
+                  
+              arrSearchMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+              sortKey: (each?.sortKey)!,
+              mediaURL: (each?.mediaUrl)!,
+              canBeOpenedOn: (each?.canBeOpenedOn)!,
+              isLocked: (each?.isLocked)!,
+              searchString: (each?.searchString)!,
+              postedBy: (each?.postedBy)!,
+              receivedBy: (each?.receivedBy)!,
+              createdAt: (each?.createdAt)!,
+              lastEdited: (each?.lastEdited)!,
+              postType: (each?.postType)!,
+              description: (each?.description)!))
+                  
+              }
+        
+        methodhandler()
+        
+    }
+    
+}
+
+
+
+var Token_arrSearchReceivedMessageVaults: String!
+
+func SearchReceivedMessageVaults(username: String, searchstring: String, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+    Token_arrSearchReceivedMessageVaults = " "
+    appSyncClient?.fetch(query: SearchMessageVaultsQuery(PrimaryKey: username+"-received", SearchString: searchstring.lowercased(), limit: 20), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+      if error != nil {
+            print(error?.localizedDescription ?? "")
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+            displayToast("There was a problem fetching messagevaults. Please try again later.")
+            return
+        }
+        
+        arrSearchReceivedMessageVaults.removeAll()
+        
+        
+        for each in (result?.data?.searchMessageVaults?.items)!{
+            print("SAVED WORDS DID WORK!")
+            
+       arrSearchReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+       sortKey: (each?.sortKey)!,
+       mediaURL: (each?.mediaUrl)!,
+       canBeOpenedOn: (each?.canBeOpenedOn)!,
+       isLocked: (each?.isLocked)!,
+       searchString: (each?.searchString)!,
+       postedBy: (each?.postedBy)!,
+       receivedBy: (each?.receivedBy)!,
+       createdAt: (each?.createdAt)!,
+       lastEdited: (each?.lastEdited)!,
+       postType: (each?.postType)!,
+       description: (each?.description)!))
+                           
+        
+        }
+        
+        Token_arrSearchReceivedMessageVaults = result?.data?.searchMessageVaults?.nextToken
+        
+    
+        methodhandler()
+        
+        
+    }
+    
+}
+
+
+func SearchReceivedMessageVaultsNext( username: String, searchstring: String, methodhandler: @escaping MethodHandler){
+    guard Token_arrSearchReceivedMessageVaults != nil else {
+        return
+    }
+    defineAppSyncSource()
+    
+    
+    appSyncClient?.fetch(query: SearchMessageVaultsQuery(PrimaryKey: username+"-received", SearchString: searchstring.lowercased(), limit: 20, nextToken: Token_arrSearchReceivedMessageVaults), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        
+       if error != nil {
+            print(error?.localizedDescription ?? "")
+                       displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+                      displayToast("There was a problem fetching messagevaults. Please try again later.")
+
+            return
+        }
+        Token_arrSearchReceivedMessageVaults = result?.data?.searchMessageVaults?.nextToken
+        print("NEXT TOKEN")
+        
+          for each in (result?.data?.searchMessageVaults?.items)!{
+                  
+              arrSearchReceivedMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
+              sortKey: (each?.sortKey)!,
+              mediaURL: (each?.mediaUrl)!,
+              canBeOpenedOn: (each?.canBeOpenedOn)!,
+              isLocked: (each?.isLocked)!,
+              searchString: (each?.searchString)!,
+              postedBy: (each?.postedBy)!,
+              receivedBy: (each?.receivedBy)!,
+              createdAt: (each?.createdAt)!,
+              lastEdited: (each?.lastEdited)!,
+              postType: (each?.postType)!,
+              description: (each?.description)!))
+                  
+              }
+        
+        methodhandler()
+        
+    }
+    
+}

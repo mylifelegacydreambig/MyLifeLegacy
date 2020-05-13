@@ -277,3 +277,55 @@ func DeleteCalendarEvent(input: DeleteUserInput, methodhandler: @escaping Method
 }
 
 
+func UpdateMessageVault(input: MessageVaultInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: UpdateMessageVaultMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Creating MessageVault Event")
+            
+            CreateMessageVault(input: input, methodhandler: methodhandler)
+            return
+        }
+        methodhandler()
+    }
+}
+
+func CreateMessageVault(input: MessageVaultInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: CreateMessageVaultMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Error saving the item on server: \(resultError)")
+            return
+        }
+        
+         print("MessageVault Event Created")
+        methodhandler()
+    }
+}
+
+
+func DeleteMessageVault(input: DeleteUserInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: DeleteMessageVaultMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Error saving the item on server: \(resultError)")
+            return
+        }
+        methodhandler()
+    }
+}
+
+
+

@@ -21,6 +21,7 @@ import MediaPlayer
 import StoreKit
 import DynamicColor
 import AWSS3
+import SDWebImage
 
 let AppColor = DynamicColor(hexString: "ffffff")
 var alluilanguages: [String] = ["English", "日本語", "한국어", "简体中文","繁体中文","हिन्दी", "Español (LATAM)", "Française","русский","Italiano","Deutsch"]
@@ -159,7 +160,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        SDImageCache.shared.clearMemory()
+           SDImageCache.shared.clearDisk()
         DropDown.startListeningToKeyboard()
 
         do {

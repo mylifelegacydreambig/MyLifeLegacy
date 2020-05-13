@@ -188,12 +188,18 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
     
     func SetTableConstraints(){
         
-        
-        
         arrCalendars = arrCalendars.unique()
-        arrCalendars = arrCalendars.sorted {$0.eventDate.localizedStandardCompare($1.eventDate) == .orderedDescending}
+        arrCalendars = arrCalendars.sorted {$0.eventDate.localizedStandardCompare($1.eventDate) == .orderedAscending}
+        
         calendarTbl.reloadData()
         
+        constraintHeightCalendarTbl.constant = CGFloat(60 * arrCalendars.count)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        calendarTbl.reloadData()
+        sentCV.reloadData()
+        receivedCV.reloadData()
     }
     
     override func viewDidLoad() {
@@ -206,10 +212,10 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
         receivedCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
         sentCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
         calendarTbl.register(UINib.init(nibName: "CustomCalendarTVC", bundle: nil), forCellReuseIdentifier: "CustomCalendarTVC")
-        
+        FetchReceivedMessageVaults(username: username, methodhandler: SetDataForReceivedMessages)
+        FetchMessageVaults(username: username, methodhandler: SetDataForSentMessages)
         FetchCalendars(username: username, methodhandler: SetTableConstraints)
         
-        constraintHeightCalendarTbl.constant = 60 * 2
         eventTxtField.delegate = self
               displaySubViewtoParentView(self.view, subview: DateView)
                   DateView.isHidden = true
@@ -224,18 +230,15 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func clickToCreateEvent(_ sender: Any) {
-        let vc : AddVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "AddVaultVC") as! AddVaultVC
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+
     
     @IBAction func clickToSeeAllReceived(_ sender: Any) {
-        let vc : AllVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "AllVaultVC") as! AllVaultVC
+        let vc : SentVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "SentVaultVC") as! SentVaultVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func clickToSeeAllSent(_ sender: Any) {
-        let vc : AllVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "AllVaultVC") as! AllVaultVC
+        let vc : SentVaultVC = STORYBOARD.VAULT.instantiateViewController(withIdentifier: "SentVaultVC") as! SentVaultVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -386,8 +389,31 @@ extension MyVaultVC : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func SetDataForReceivedMessages(){
+        
+        
+        arrReceivedMessageVaults = arrReceivedMessageVaults.filter {
+                $0.isLocked == false
+                }
+        
+        receivedCV.reloadData()
+    }
+    
+    func SetDataForSentMessages(){
+         
+         sentCV.reloadData()
+     }
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if collectionView == receivedCV {
+            return arrReceivedMessageVaults.count
+        } else{
+            
+            return arrMessageVaults.count
+
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -396,27 +422,41 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == receivedCV {
+          
             let cell : CustomVideoCVC = receivedCV.dequeueReusableCell(withReuseIdentifier: "CustomVideoCVC", for: indexPath) as! CustomVideoCVC
+            
+            let finaldata: messagevault = arrReceivedMessageVaults[indexPath.row]
+                      
             cell.playBtn.isHidden = true
             cell.vaultView.isHidden = true
-            if indexPath.row == 0 {
-                cell.vaultView.isHidden = false
-            }else{
-                cell.playBtn.isHidden = false
+            
+           if Int(finaldata.canBeOpenedOn)! > Int(Date().timeIntervalSince1970) {
+                 cell.vaultView.isHidden = false
+            cell.AccessLabel.text = "Can be opened by you on " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn)
+
+            } else {
+                 cell.playBtn.isHidden = false
             }
+            
+            cell.nameLbl.text = finaldata.postedBy
             cell.moreBtn.tag = indexPath.row
             cell.moreBtn.addTarget(self, action: #selector(clickToVaultMore(_:)), for: .touchUpInside)
             return cell
         }
         else {
             let cell : CustomVideoCVC = sentCV.dequeueReusableCell(withReuseIdentifier: "CustomVideoCVC", for: indexPath) as! CustomVideoCVC
+            
+            let finaldata: messagevault = arrMessageVaults[indexPath.row]
             cell.playBtn.isHidden = true
             cell.vaultView.isHidden = true
-            if indexPath.row == 0 {
-                cell.vaultView.isHidden = false
-            }else{
-                cell.playBtn.isHidden = false
-            }
+            if Int(finaldata.canBeOpenedOn)! > Int(Date().timeIntervalSince1970) {
+                         cell.vaultView.isHidden = false
+                    cell.AccessLabel.text = "Can be accessed by user on " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn)
+                    } else {
+                         cell.playBtn.isHidden = false
+                    }
+                    
+             cell.nameLbl.text = finaldata.receivedBy
             cell.moreBtn.tag = indexPath.row
             cell.moreBtn.addTarget(self, action: #selector(clickToVaultMore(_:)), for: .touchUpInside)
             return cell
@@ -424,6 +464,7 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
     
     @IBAction func clickToVaultMore(_ sender: UIButton) {
+        
         let view : DeletePopupView = DeletePopupView().loadNib() as! DeletePopupView
         view.frame = self.view.frame
         self.view.addSubview(view)

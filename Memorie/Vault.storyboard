@@ -98,6 +98,12 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="65"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderColorTypeAdapter">
+                                                                <integer key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kathy Barrett" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-e3-IdV" customClass="Label" customModule="Memorie" customModuleProvider="target">
@@ -285,7 +291,7 @@
                                                 <rect key="frame" x="0.0" y="683" width="320" height="239"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Mu-o1-hT2" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="10" width="75" height="19"/>
+                                                        <rect key="frame" x="20" y="10" width="78" height="19"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -482,10 +488,10 @@
             </objects>
             <point key="canvasLocation" x="64" y="102"/>
         </scene>
-        <!--All VaultVC-->
+        <!--Sent VaultVC-->
         <scene sceneID="dH1-9O-hS3">
             <objects>
-                <viewController storyboardIdentifier="AllVaultVC" id="r7s-xy-mrh" customClass="AllVaultVC" customModule="Memorie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SentVaultVC" id="r7s-xy-mrh" customClass="SentVaultVC" customModule="Memorie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AX2-rJ-VXd"/>
                         <viewControllerLayoutGuide type="bottom" id="WWd-HR-vtD"/>
@@ -505,11 +511,11 @@
                                         </constraints>
                                         <state key="normal" image="back_black"/>
                                         <connections>
-                                            <action selector="clickToBack:" destination="r7s-xy-mrh" eventType="touchUpInside" id="yve-Ai-LOt"/>
+                                            <action selector="clickToBack:" destination="r7s-xy-mrh" eventType="touchUpInside" id="ikS-Nx-ITp"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Vault" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C60-Y0-QFN" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="129.5" y="10.5" width="61.5" height="19"/>
+                                        <rect key="frame" x="126.5" y="10.5" width="67" height="19"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -540,7 +546,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Memories" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0t2-Mw-ZkS" customClass="TextField" customModule="Memorie" customModuleProvider="target">
                                         <rect key="frame" x="50" y="0.0" width="240" height="50"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="textColorTypeAdapter">
                                                 <integer key="value" value="2"/>
@@ -616,7 +622,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="clickToCreateEvent:" destination="5vU-6e-0kQ" eventType="touchUpInside" id="s0L-lk-yHh"/>
+                                    <action selector="clickToCreateEvent:" destination="r7s-xy-mrh" eventType="touchUpInside" id="SN5-Uc-MsL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -638,6 +644,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchTxtField" destination="0t2-Mw-ZkS" id="pLA-eX-Sn4"/>
                         <outlet property="vaultCV" destination="n4s-AT-dg3" id="bo4-vk-bMS"/>
                     </connections>
                 </viewController>
@@ -653,7 +660,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s6q-Rq-mFt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s6q-Rq-mFt">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="y5F-44-4xj"/>
@@ -661,7 +668,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCF-Hc-Leh" customClass="Button" customModule="Memorie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
-                                <state key="normal" title="+ Add Memory">
+                                <state key="normal" title="+ Add A Memory">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -674,7 +681,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="clickToAddImage:" destination="VSe-s2-xGh" eventType="touchUpInside" id="fak-Eg-ZLi"/>
+                                    <action selector="clickToAddImage:" destination="VSe-s2-xGh" eventType="touchUpInside" id="zPh-Gm-frF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2g-jE-aWg" customClass="Button" customModule="Memorie" customModuleProvider="target">
@@ -691,14 +698,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="clickToBack:" destination="VSe-s2-xGh" eventType="touchUpInside" id="i6k-av-5st"/>
+                                    <action selector="clickToBack:" destination="VSe-s2-xGh" eventType="touchUpInside" id="LFc-pq-AbB"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pjM-RR-VUb" customClass="View" customModule="Memorie" customModuleProvider="target">
                                 <rect key="frame" x="20" y="240" width="280" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select A Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynB-hG-FuC" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="18" width="110" height="21"/>
+                                        <rect key="frame" x="15" y="18" width="115.5" height="21"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                                         <color key="textColor" red="0.41176470590000003" green="0.4039215686" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -713,7 +720,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a date that this message can be unlocked." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPw-c2-aUe" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="39" width="228" height="28"/>
+                                        <rect key="frame" x="15" y="39" width="228" height="29"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -728,7 +735,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iuL-sP-Q5w">
-                                        <rect key="frame" x="253" y="14" width="12" height="42"/>
+                                        <rect key="frame" x="253" y="24" width="12" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="he0-9h-O60"/>
                                         </constraints>
@@ -737,7 +744,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrm-OA-zKn">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="70"/>
                                         <connections>
-                                            <action selector="clickToSelectDate:" destination="VSe-s2-xGh" eventType="touchUpInside" id="RKX-yp-bkL"/>
+                                            <action selector="clickToSelectYear:" destination="VSe-s2-xGh" eventType="touchUpInside" id="qFD-6D-RFa"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -766,7 +773,7 @@
                                 <rect key="frame" x="20" y="330" width="280" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select A Recipient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHy-1L-aOm" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="18" width="148" height="21"/>
+                                        <rect key="frame" x="15" y="18" width="155" height="21"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                                         <color key="textColor" red="0.41176470590000003" green="0.4039215686" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -781,7 +788,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select who can view this." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Oq-kz-Jag" customClass="Label" customModule="Memorie" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="39" width="136" height="14"/>
+                                        <rect key="frame" x="15" y="39" width="143" height="14"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -796,13 +803,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9LL-eC-tqZ">
-                                        <rect key="frame" x="241" y="14" width="24" height="42"/>
+                                        <rect key="frame" x="253" y="24" width="12" height="22"/>
                                         <state key="normal" image="right_arrow"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTe-nP-CYn">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="70"/>
                                         <connections>
-                                            <action selector="clickToSelectRecipient:" destination="VSe-s2-xGh" eventType="touchUpInside" id="ptx-Fs-Hhw"/>
+                                            <action selector="SelectFriends:" destination="VSe-s2-xGh" eventType="touchUpInside" id="hgW-ck-YN1"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -850,9 +857,31 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="clickToNext:" destination="VSe-s2-xGh" eventType="touchUpInside" id="Hzn-Va-obj"/>
+                                    <action selector="clickToNext:" destination="VSe-s2-xGh" eventType="touchUpInside" id="GuH-br-nYi"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="oXu-3T-baV" customClass="TextView" customModule="Memorie" customModuleProvider="target">
+                                <rect key="frame" x="20" y="411" width="280" height="100"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="wcc-bK-ak2"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textColorTypeAdapter">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontTypeAdapter" value="ar"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.99990516900000004" green="1" blue="0.99987047910000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -862,6 +891,8 @@
                             <constraint firstItem="iCF-Hc-Leh" firstAttribute="trailing" secondItem="s6q-Rq-mFt" secondAttribute="trailing" id="6ky-Co-H6l"/>
                             <constraint firstItem="nlq-YS-aWO" firstAttribute="leading" secondItem="vsz-4w-EDw" secondAttribute="leading" constant="50" id="G6r-n0-8IL"/>
                             <constraint firstItem="vsz-4w-EDw" firstAttribute="trailing" secondItem="pjM-RR-VUb" secondAttribute="trailing" constant="20" id="HkN-Vv-zeB"/>
+                            <constraint firstItem="oXu-3T-baV" firstAttribute="leading" secondItem="XTe-nP-CYn" secondAttribute="leading" id="KZn-LJ-vBJ"/>
+                            <constraint firstItem="oXu-3T-baV" firstAttribute="trailing" secondItem="XTe-nP-CYn" secondAttribute="trailing" id="PC0-Wh-iXl"/>
                             <constraint firstItem="vsz-4w-EDw" firstAttribute="bottom" secondItem="nlq-YS-aWO" secondAttribute="bottom" constant="20" id="Qwb-Wq-8t1"/>
                             <constraint firstItem="y2g-jE-aWg" firstAttribute="leading" secondItem="vsz-4w-EDw" secondAttribute="leading" id="RQF-Ei-JA8"/>
                             <constraint firstItem="2ni-6V-TSa" firstAttribute="leading" secondItem="vsz-4w-EDw" secondAttribute="leading" constant="20" id="SlE-Ad-jA5"/>
@@ -873,15 +904,54 @@
                             <constraint firstItem="pjM-RR-VUb" firstAttribute="top" secondItem="iCF-Hc-Leh" secondAttribute="bottom" constant="20" id="eZH-0H-TL0"/>
                             <constraint firstItem="vsz-4w-EDw" firstAttribute="trailing" secondItem="2ni-6V-TSa" secondAttribute="trailing" constant="20" id="fka-7x-w39"/>
                             <constraint firstItem="vsz-4w-EDw" firstAttribute="trailing" secondItem="nlq-YS-aWO" secondAttribute="trailing" constant="50" id="l9d-nD-Dnr"/>
+                            <constraint firstItem="oXu-3T-baV" firstAttribute="top" secondItem="XTe-nP-CYn" secondAttribute="bottom" constant="11" id="sz9-OM-hQd"/>
                             <constraint firstItem="s6q-Rq-mFt" firstAttribute="trailing" secondItem="vsz-4w-EDw" secondAttribute="trailing" id="tkY-sO-L58"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vsz-4w-EDw"/>
                     </view>
                     <connections>
-                        <outlet property="imgView" destination="s6q-Rq-mFt" id="nzY-GZ-ds7"/>
+                        <outlet property="DateView" destination="Krn-67-xx6" id="qQa-nU-k9j"/>
+                        <outlet property="RecipientLbl" destination="RHy-1L-aOm" id="lTP-zU-Ei4"/>
+                        <outlet property="YearLbl" destination="ynB-hG-FuC" id="GHq-8C-FsY"/>
+                        <outlet property="datePicker" destination="9D9-uJ-qfl" id="RQu-Lb-Lg8"/>
+                        <outlet property="descTxtView" destination="oXu-3T-baV" id="Ixb-Jd-ZeB"/>
+                        <outlet property="imgView" destination="s6q-Rq-mFt" id="fRO-44-se7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7C-A0-jEb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Krn-67-xx6">
+                    <rect key="frame" x="0.0" y="0.0" width="331" height="495"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="9D9-uJ-qfl">
+                            <rect key="frame" x="0.0" y="139.5" width="331" height="216"/>
+                            <connections>
+                                <action selector="DatePickerChanged:" destination="VSe-s2-xGh" eventType="valueChanged" id="7S7-DO-WE4"/>
+                            </connections>
+                        </datePicker>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Te1-ep-yud">
+                            <rect key="frame" x="0.0" y="15" width="45" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="AmY-7h-TlU"/>
+                                <constraint firstAttribute="width" constant="45" id="ddn-1o-uZc"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="back_black"/>
+                            <connections>
+                                <action selector="hideDateView:" destination="VSe-s2-xGh" eventType="touchUpInside" id="C5D-dS-q9i"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="Te1-ep-yud" firstAttribute="leading" secondItem="9D9-uJ-qfl" secondAttribute="leading" id="ADS-zh-wVc"/>
+                        <constraint firstItem="9D9-uJ-qfl" firstAttribute="trailing" secondItem="bID-3s-AFp" secondAttribute="trailing" id="Cyf-BU-seW"/>
+                        <constraint firstItem="Te1-ep-yud" firstAttribute="top" secondItem="bID-3s-AFp" secondAttribute="top" constant="15" id="KFb-VO-Dqg"/>
+                        <constraint firstItem="9D9-uJ-qfl" firstAttribute="leading" secondItem="bID-3s-AFp" secondAttribute="leading" id="gad-aw-3u5"/>
+                        <constraint firstItem="9D9-uJ-qfl" firstAttribute="centerY" secondItem="bID-3s-AFp" secondAttribute="centerY" id="mps-3A-UoC"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="bID-3s-AFp"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1466" y="-127"/>
         </scene>

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		093334542461EB95001EC2C2 /* DatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 093334532461EB95001EC2C2 /* DatePickerCell.xib */; };
 		093FDE37246B1E43002F740F /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 093FDE36246B1E43002F740F /* awsconfiguration.json */; };
+		09599D80246B9B7A00E25579 /* ChooseFriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09599D7F246B9B7A00E25579 /* ChooseFriendsVC.swift */; };
 		09A25BAD2460E08C001C560A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BAC2460E08B001C560A /* API.swift */; };
 		09A25BBC2460E267001C560A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB22460E263001C560A /* LaunchScreenViewController.swift */; };
 		09A25BBD2460E267001C560A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A25BB32460E263001C560A /* Constants.swift */; };
@@ -105,6 +106,7 @@
 /* Begin PBXFileReference section */
 		093334532461EB95001EC2C2 /* DatePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerCell.xib; sourceTree = "<group>"; };
 		093FDE36246B1E43002F740F /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		09599D7F246B9B7A00E25579 /* ChooseFriendsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseFriendsVC.swift; sourceTree = "<group>"; };
 		095AAF0C2463CD2F00B367AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		095AAF0D2463CD3000B367AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09A25BAC2460E08B001C560A /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 		1881213624486E1F00391A68 /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				09599D7F246B9B7A00E25579 /* ChooseFriendsVC.swift */,
 				188121342448689200391A68 /* MyFriendsFamilyVC.swift */,
 				1881213724486E5D00391A68 /* AddFriendsVC.swift */,
 				18D9030124487179001B4666 /* FriendProfileVC.swift */,
@@ -668,6 +671,7 @@
 				09A25BBF2460E267001C560A /* MFAViewController.swift in Sources */,
 				1862F8A724482AD00074103F /* DatePicker.swift in Sources */,
 				1862F8A924482AD00074103F /* PlaceholderTextView.swift in Sources */,
+				09599D80246B9B7A00E25579 /* ChooseFriendsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

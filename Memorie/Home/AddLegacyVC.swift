@@ -12,23 +12,76 @@ import SVProgressHUD
 import Lightbox
 import AVFoundation
 import AVKit
-class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDelegate, LightboxControllerDismissalDelegate {
+class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDelegate, LightboxControllerDismissalDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
     
-    var newpost: PostInput = PostInput(primaryKey:globalusername+"-post", sortKey: globalusername+Date().SQL(), mediaUrl: "n/a", description: "n/a", categories: "n/a", likes: 0, year: "n/a", searchString: "n/a", postedBy: me[0].firstName, createdAt: String(Int(Date().timeIntervalSince1970)), lastEdited: String(Int(Date().timeIntervalSince1970)), postType: "IMAGE")
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+          return arrYears.count
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+         
+     return arrYears[row]
+         
+     }
+     
+    var filteryear: String!
+    
+    @IBAction func hidePickerView(_ sender: Any) {
+         pickerContainer.isHidden = true
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+         
+        filteryear = arrYears[row]
+        YearLbl.text = filteryear
+        newpost.year = filteryear
+         
+     }
+    
+    var newpost: PostInput = PostInput(primaryKey:globalusername+"-post", sortKey: globalusername+Date().SQL(), mediaUrl: "n/a", description: "n/a", categories: "n/a", likes: 0, year: CurrentYear(), searchString: "n/a", postedBy: me[0].firstName, createdAt: String(Int(Date().timeIntervalSince1970)), lastEdited: String(Int(Date().timeIntervalSince1970)), postType: "IMAGE")
     
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var categoryCV: UICollectionView!
     @IBOutlet weak var descTxtView: TextView!
+    @IBOutlet var pickerContainer: UIView!
+      
     
+    @IBOutlet weak var YearLbl: Label!
+    @IBOutlet weak var picker: UIPickerView!
+    //MARK:- Button click event
+    @IBAction func clickToSelectYear(_ sender: Any) {
+    pickerOption = 0
+    picker.reloadAllComponents()
+    showPickerView()
+    }
+    
+    func showPickerView(){
+           pickerContainer.isHidden = false
+       }
+    
+    
+      var arrYears : [String] = []
     var arrCategory = ["TRAVEL", "COOKING", "MOVIE", "READING"]
     var arrSelectedCategories: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        picker.delegate = self
+        YearLbl.text = CurrentYear()
         // Do any additional setup after loading the view.
         categoryCV.register(UINib.init(nibName: "CustomCategoryCVC", bundle: nil), forCellWithReuseIdentifier: "CustomCategoryCVC")
+        
+        for i in 1965 ... 2030 {
+            arrYears.append(String(i))
+        }
+        
+         displaySubViewtoParentView(self.view, subview: pickerContainer)
+        pickerContainer.isHidden = true
     }
-    
+     var pickerOption: Int = 0
     //MARK:- Button click event
     @IBAction func clickToBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -50,13 +103,6 @@ class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControll
             return
         }
         
-        let date = Date()
-        let calender = Calendar.current
-        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
-        
-        if let year = components.year{
-             newpost.year = String(year)
-        }
         
         if descTxtView.text.count > 0 {
             newpost.description = descTxtView.text
@@ -290,7 +336,7 @@ class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControll
                gallery = GalleryController()
                gallery.delegate = self
                Config.Camera.imageLimit = 1
-            Config.VideoEditor.maximumDuration = .infinity
+            Config.VideoEditor.maximumDuration = 600
             Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
                present(gallery, animated: true, completion: nil)
            }
@@ -303,6 +349,9 @@ class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControll
     var arr: [String] = ["users/",globalusername,"/posts/"," ",".jpg"]
     
 
+    
+    
+    
     /*
     // MARK: - Navigation
 
@@ -361,4 +410,18 @@ extension AddLegacyVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
         
       
     }
+}
+
+
+func CurrentYear() -> String{
+    var Year: String = "2020"
+    let date = Date()
+    let calender = Calendar.current
+    let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+    
+    if let year = components.year{
+         Year = String(year)
+        return Year
+    }
+    return Year
 }

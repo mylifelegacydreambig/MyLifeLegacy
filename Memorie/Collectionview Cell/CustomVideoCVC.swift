@@ -10,6 +10,7 @@ import UIKit
 
 class CustomVideoCVC: UICollectionViewCell {
 
+    @IBOutlet weak var AccessLabel: Label!
     @IBOutlet weak var moreBtn: UIButton!
     @IBOutlet weak var nameLbl: Label!
     @IBOutlet weak var playBtn: UIButton!

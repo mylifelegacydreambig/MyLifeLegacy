@@ -71,7 +71,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
                 ImageS3(key: key, data: image!.jpegData(compressionQuality: 0.3)!)
                 
                // self.UploadImageToS3(Username: globalusername, FileName: globalusername+"-profile.jpg", Data: image!.jpegData(compressionQuality: 0.3)!)
-
+            
                 self.imgBtn.setBackgroundImage(image, for: .normal)
                } else{
                 let key: String = "users/"+globalusername+"/"+globalusername+"-cover.jpg"
