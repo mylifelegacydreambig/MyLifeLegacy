@@ -35,7 +35,9 @@ let CognitoIdentityRegion: AWSRegionType = .USEast1
 
 let AppSyncRegion: AWSRegionType = .USEast1
 let AppSyncEndpointURL: URL = URL(string: "https://ktjr4titqbdgngzi7hkehgjtma.appsync-api.us-east-1.amazonaws.com/graphql")!
-let database_name = "MyLifeLegacyAPI_AWS_IAM"
+let database_name_userpool = "MyLifeLegacyAPI_AWS_IAM"
+
+let database_name = "MyLifeLegacyAPI_AMAZON_COGNITO_USER_POOLS"
 
 
 let AWSCognitoUserPoolsSignInProviderKey = "UserPool"

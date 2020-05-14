@@ -12,7 +12,108 @@ import Gallery
 import SVProgressHUD
 import Lightbox
 
-class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+var searchusername: String!
+
+class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate, CustomLegacyCellDelegate {
+    
+    var sortKey: String!
+    var username: String!
+     func Delete(){
+                         
+             if let index = currentPosts.index(where: { $0.sortKey == sortKey}) {
+               
+               let finaldata: post = currentPosts[index]
+                           DispatchQueue.main.async{
+                             
+                               let inputA: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.primaryKey, sortKey: finaldata.sortKey)
+                         
+                               
+                               DeletePost(input: inputA, methodhandler: Dummy)
+                           
+                                           
+                               self.currentPosts.remove(at: index)
+                        }
+              
+             
+             DeletePopup.isHidden = true
+               
+             tblView.reloadData()
+         }
+           
+           if let index = arrSearchUserPosts.index(where: { $0.sortKey == sortKey}) {
+                     
+                     let finaldata: post = arrSearchUserPosts[index]
+                                 DispatchQueue.main.async{
+                                                 
+                                     arrSearchUserPosts.remove(at: index)
+                                   self.SetFilter()
+                              }
+
+
+               }
+           
+            SetFilter()
+          
+       }
+       
+       @IBAction func DeleteTapped(_ sender: Any) {
+           Delete()
+       }
+       @IBOutlet var DeletePopup: DeletePopupView!
+          
+           @IBAction func HideDeleteView(_ sender: Any) {
+               DeletePopup.isHidden = true
+           }
+           
+       
+       func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, subscribeButtonTappedFor youtuber: String) {
+           DeletePopup.isHidden = false
+           sortKey = youtuber
+       }
+       
+       //var selectedpost: post!
+       func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, likeButtonTappedFor like: String) {
+           
+        
+           if let index = arrSearchUserPosts.index(where: { $0.sortKey == like}) {
+
+               
+               if arrSearchUserPosts[index].comments == globalusername {
+                   arrSearchUserPosts[index].comments = "n/a"
+                   let like: Int =  arrSearchUserPosts[index].likes - 1
+                   if like < 0 {
+                         arrSearchUserPosts[index].likes = 0
+                   } else {
+                       arrSearchUserPosts[index].likes = like
+                   }
+                   
+                   
+                       let input: ReactionInput = ReactionInput(eventId: arrSearchUserPosts[index].sortKey, commentId: globalusername)
+                   
+                   let postinput: PostInput = PostInput(primaryKey: arrSearchUserPosts[index].primaryKey, sortKey: arrSearchUserPosts[index].sortKey, likes: arrSearchUserPosts[index].likes)
+                   
+                       UpdatePost(input: postinput, methodhandler: Dummy)
+                       DeleteReaction(input: input, methodhandler: Dummy)
+               } else {
+                   arrSearchUserPosts[index].comments = globalusername
+                   arrSearchUserPosts[index].likes = arrSearchUserPosts[index].likes + 1
+                   
+                       let input: ReactionInput = ReactionInput(eventId: arrSearchUserPosts[index].sortKey, commentId: globalusername, content: "LIKE", createdAt: Date().SQL(), reactionType: "LIKE", lastEdited: Date().SQL(), reactedBy: globalusername, originalAuthor: arrSearchUserPosts[index].postedBy)
+                       
+                       CreateReaction(input: input, methodhandler: Dummy)
+                   let postinput: PostInput = PostInput(primaryKey: arrSearchUserPosts[index].primaryKey, sortKey: arrSearchUserPosts[index].sortKey, likes: arrSearchUserPosts[index].likes, lastEdited: String(Int(Date().timeIntervalSince1970)))
+                   UpdatePost(input: postinput, methodhandler: Dummy)
+
+               }
+               
+                       SetFilter()
+               
+                      }
+            
+       }
+       
+
+       
     
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
@@ -26,18 +127,27 @@ class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     var currentPosts: [post] = []
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        searchTxt.resignFirstResponder()
-        
-        if searchTxt.text!.count == 0 {
-            currentPosts.removeAll()
-            SearchResultsLbl.text = "No Results".localized()
-        } else {
-            SearchPosts(username: globalusername, searchString: searchTxt.text!.lowercased(), methodhandler: SetFilter)
-         
-        }
-        //searchTxt.text = ""
-        tblView.reloadData()
+
     }
+    
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+                let searchText = textField.text! + string.trimmed
+                
+                if searchText.count > 0 {
+                    print("SENSING")
+                    SearchPosts(username: username, searchString: searchTxt.text!.lowercased().removeExcessiveSpaces, methodhandler: SetFilter)
+                    tblView.reloadData()
+                }
+                else {
+                       currentPosts.removeAll()
+                          SearchResultsLbl.text = "No Results".localized()
+                    
+            }
+                return true
+            }
+    
+    
+    
     
     @IBOutlet weak var searchTxt: TextField!
     
@@ -135,7 +245,6 @@ class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     
     
     func SetFilter(){
-        if isViewingMyProfile == true {
             currentPosts = arrSearchUserPosts
             currentPosts = currentPosts.unique()
             currentPosts = currentPosts.sorted {$0.sortKey > $1.sortKey}
@@ -154,26 +263,25 @@ class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
             }
             
             tblView.reloadData()
-              }
+              
         
         SortData()
     }
     
-    var username: String!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
+        searchTxt.placeholder = "Eg: travel, italy, mother's day"
+        username = searchusername
+        displaySubViewtoParentView(self.view, subview: DeletePopup)
+            DeletePopup.isHidden = true
         searchTxt.delegate = self
      self.picker.dataSource = self
         self.picker.delegate = self
         
         pickerOption = 1
+ 
         
-        if isViewingMyProfile == false {
-            username = friend.sortKey
-        } else {
-            username = globalusername
-        }
         
         for i in 1965 ... 2030 {
             arrYears.append(String(i))
@@ -189,7 +297,6 @@ class SearchMyLegacyVC: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     @IBOutlet var pickerContainer: UIView!
     
     var arrYears : [String] = []
-    var arrCategory = ["TRAVEL", "COOKING", "MOVIE", "READING"]
 
     var pickerOption: Int = 0
     
@@ -269,7 +376,7 @@ extension SearchMyLegacyVC : UITableViewDelegate, UITableViewDataSource {
                
           cell.imgView.setImageFromURL(url: url)
           cell.nameLabel.text = finaldata.postedBy
-          cell.timeLabel.text = TimeExtractor(timestamp: finaldata.lastEdited)
+          cell.timeLabel.text = TimeExtractor(timestamp: finaldata.createdAt)
           cell.likesLbl.setTitle(String(finaldata.likes) + " Likes", for: .normal)
           
           if finaldata.description == "n/a" {
@@ -277,10 +384,32 @@ extension SearchMyLegacyVC : UITableViewDelegate, UITableViewDataSource {
           } else {
              cell.DescriptionLabel.text = finaldata.description
           }
+        
+        
+           if finaldata.comments == globalusername {
+               cell.LikeBtn.setImage(UIImage(named:"chat-like-filled"), for: .normal)
+               cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+           } else {
+               cell.LikeBtn.setImage(UIImage(named:"chat-like"), for: .normal)
+               cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+           }
+           
           
           cell.CategoriesLbl.text = finaldata.categories.replacingOccurrences(of: ",", with: " #").lowercased()
           cell.CategoriesLbl.text = "#"+cell.CategoriesLbl.text!
           cell.selectionStyle = .none
+          cell.delegate = self
+            cell.youtuber = finaldata.sortKey
+            cell.like = finaldata.sortKey
+            
+        if finaldata.primaryKey == globalusername+"-post"{
+            cell.MoreBtn.isHidden = false
+            cell.LikeBtnTrailingConstraint.constant = -40
+        } else {
+            cell.MoreBtn.isHidden = true
+            cell.LikeBtnTrailingConstraint.constant = 0
+        }
+        
           return cell
       }
     

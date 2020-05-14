@@ -46,9 +46,18 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     //Fetch Global User Data
     
 
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        AppDelegate().sharedDelegate().removeLoader()
+    }
     
        @IBAction func signInPressed(_ sender: AnyObject) {
+        AppDelegate().sharedDelegate().showLoader()
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(8.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+            execute: {
+              AppDelegate().sharedDelegate().removeLoader()
+        })
         
         guard self.username.text?.isEmpty == false && self.password.text?.isEmpty == false else{
             displayToast("Please enter a valid user name and password")

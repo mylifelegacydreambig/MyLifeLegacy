@@ -14,8 +14,55 @@ import AVFoundation
 import AVKit
 import DropDown
 
-class FriendProfileVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+class FriendProfileVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate, CustomLegacyCellDelegate {
 
+       
+       func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, subscribeButtonTappedFor youtuber: String) {
+       }
+       
+       //var selectedpost: post!
+       func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, likeButtonTappedFor like: String) {
+           
+        
+           if let index = arrPosts.index(where: { $0.sortKey == like}) {
+
+               
+               if arrPosts[index].comments == globalusername {
+                   arrPosts[index].comments = "n/a"
+                   let like: Int =  arrPosts[index].likes - 1
+                   if like < 0 {
+                         arrPosts[index].likes = 0
+                   } else {
+                       arrPosts[index].likes = like
+                   }
+                   
+                   
+                       let input: ReactionInput = ReactionInput(eventId: arrPosts[index].sortKey, commentId: globalusername)
+                   
+                   let postinput: PostInput = PostInput(primaryKey: arrPosts[index].primaryKey, sortKey: arrPosts[index].sortKey, likes: arrPosts[index].likes)
+                   
+                       UpdatePost(input: postinput, methodhandler: Dummy)
+                       DeleteReaction(input: input, methodhandler: Dummy)
+               } else {
+                   arrPosts[index].comments = globalusername
+                   arrPosts[index].likes = arrPosts[index].likes + 1
+                   
+                       let input: ReactionInput = ReactionInput(eventId: arrPosts[index].sortKey, commentId: globalusername, content: "LIKE", createdAt: Date().SQL(), reactionType: "LIKE", lastEdited: Date().SQL(), reactedBy: globalusername, originalAuthor: arrPosts[index].postedBy)
+                       
+                       CreateReaction(input: input, methodhandler: Dummy)
+                   let postinput: PostInput = PostInput(primaryKey: arrPosts[index].primaryKey, sortKey: arrPosts[index].sortKey, likes: arrPosts[index].likes, lastEdited: String(Int(Date().timeIntervalSince1970)))
+                   UpdatePost(input: postinput, methodhandler: Dummy)
+
+               }
+               
+                       SetFilter()
+               
+                      }
+            
+       }
+       
+
+       
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
      }
@@ -164,6 +211,7 @@ class FriendProfileVC: UIViewController, LightboxControllerPageDelegate, Lightbo
     }
     
     @IBAction func clickToSearch(_ sender: Any) {
+        searchusername = friend.sortKey
         let vc : SearchMyLegacyVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "SearchMyLegacyVC") as! SearchMyLegacyVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -213,7 +261,7 @@ extension FriendProfileVC : UITableViewDelegate, UITableViewDataSource {
              
         cell.imgView.setImageFromURL(url: url)
         cell.nameLabel.text = finaldata.postedBy
-        cell.timeLabel.text = TimeExtractor(timestamp: finaldata.lastEdited)
+        cell.timeLabel.text = TimeExtractor(timestamp: finaldata.createdAt)
         cell.likesLbl.setTitle(String(finaldata.likes) + " Likes", for: .normal)
         
         if finaldata.description == "n/a" {
@@ -221,10 +269,25 @@ extension FriendProfileVC : UITableViewDelegate, UITableViewDataSource {
         } else {
            cell.DescriptionLabel.text = finaldata.description
         }
+
+        if finaldata.comments == globalusername {
+            cell.LikeBtn.setImage(UIImage(named:"chat-like-filled"), for: .normal)
+            cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+        } else {
+            cell.LikeBtn.setImage(UIImage(named:"chat-like"), for: .normal)
+            cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+        }
         
         cell.CategoriesLbl.text = finaldata.categories.replacingOccurrences(of: ",", with: " #").lowercased()
         cell.CategoriesLbl.text = "#"+cell.CategoriesLbl.text!
         cell.selectionStyle = .none
+        
+        cell.MoreBtn.isHidden = true
+        cell.LikeBtnTrailingConstraint.constant = 0
+        cell.delegate = self
+                   cell.youtuber = finaldata.sortKey
+                   cell.like = finaldata.sortKey
+                   
         return cell
     }
     

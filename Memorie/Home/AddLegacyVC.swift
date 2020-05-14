@@ -64,7 +64,6 @@ class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControll
     
     
       var arrYears : [String] = []
-    var arrCategory = ["TRAVEL", "COOKING", "MOVIE", "READING"]
     var arrSelectedCategories: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,12 +125,18 @@ class AddLegacyVC: UIViewController, UIGestureRecognizerDelegate,GalleryControll
                                 postedBy: newpost.postedBy!,
                                 createdAt: newpost.createdAt!,
                                 lastEdited: newpost.lastEdited!,
-                                postType: newpost.postType!)
+                                postType: newpost.postType!,
+                                comments: "n/a")
         
         arrPosts.append(mypost)
-        
-        UpdatePost(input: newpost, methodhandler: GoBack)
+        DispatchQueue.main.async{
+            UpdatePost(input: self.newpost, methodhandler: Dummy)
+        }
+        GoBack()
     }
+    
+    
+    
     
     
     func GoBack(){

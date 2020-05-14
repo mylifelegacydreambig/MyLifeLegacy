@@ -50,6 +50,7 @@ func defineAppSyncSource(){
 }
 
 
+
 extension String {
 func localized() ->String {
     var newlang: String! = "en"
@@ -160,8 +161,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        SDImageCache.shared.clearMemory()
-           SDImageCache.shared.clearDisk()
+//        SDImageCache.shared.clearMemory()
+//           SDImageCache.shared.clearDisk()
         DropDown.startListeningToKeyboard()
 
         do {
@@ -182,16 +183,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let defaultServiceConfiguration = AWSServiceConfiguration(
                      region: CognitoIdentityUserPoolRegion, credentialsProvider: credentialsProvider)
-                 
+           
+        
+        
+        
         AWSServiceManager.default().defaultServiceConfiguration = defaultServiceConfiguration
         
-
+        
+        
         
         let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(database_name)
+
+
+        
+        
         
         do {
         // initialize the appsync configuration
-            let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AppSyncRegion , credentialsProvider: credentialsProvider, cacheConfiguration: AWSAppSyncCacheConfiguration())
+        //    let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AppSyncRegion , credentialsProvider: credentialsProvider, cacheConfiguration: AWSAppSyncCacheConfiguration())
+            
+          let appSyncConfig = try AWSAppSyncClientConfiguration(url: AppSyncEndpointURL, serviceRegion: AppSyncRegion, userPoolsAuthProvider: MyCognitoUserPoolsAuthProvider(), cacheConfiguration: AWSAppSyncCacheConfiguration())
+                             
+            
             
             //(url: AppSyncEndpointURL, serviceRegion: AppSyncRegion, credentialsProvider: credentialsProvider, databaseURL:databaseURL)
             
@@ -200,6 +213,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch {
         print("APPSYNC Error initializing appsync client. \(error)") }
          
+      
+        
+        
+        
         
         // setup logging
         AWSDDLog.sharedInstance.logLevel = .verbose
@@ -539,5 +556,24 @@ extension Bundle {
     }
     var releaseVersionNumberPretty: String {
         return "v\(releaseVersionNumber ?? "1.0.0")"
+    }
+}
+
+
+class MyCognitoUserPoolsAuthProvider: AWSCognitoUserPoolsAuthProviderAsync {
+ 
+        func getLatestAuthToken(_ callback: @escaping (String?, Error?) -> Void) {
+        
+        let pool = AWSCognitoIdentityUserPool(forKey: "UserPool")
+        pool.currentUser()?.getSession().continueOnSuccessWith(block: { (task) -> Any? in
+            
+                     print("TOKEN WORKING")
+                     print(task.result?.idToken?.tokenString)
+                     
+            callback(task.result?.idToken?.tokenString, nil)
+         
+            return nil
+        })
+        
     }
 }

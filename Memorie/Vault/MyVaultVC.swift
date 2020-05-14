@@ -68,6 +68,48 @@ class MyVaultVC: UIViewController,LightboxControllerPageDelegate, LightboxContro
 
           sentCV.reloadData()
       }
+        } else if activeCollectionView == receivedCV{
+            
+
+             if let index = arrReceivedMessageVaults.index(where: { $0.sortKey == sortKey}) {
+                   let finaldata: messagevault = arrReceivedMessageVaults[index]
+                DispatchQueue.main.async{
+                  
+                    let inputA: MessageVaultInput = MessageVaultInput(primaryKey: finaldata.postedBy+"-sent", sortKey: finaldata.sortKey, isLocked: true)
+                    
+                    let inputB: MessageVaultInput = MessageVaultInput(primaryKey: finaldata.receivedBy+"-received", sortKey: finaldata.sortKey, isLocked: true)
+                    
+                    
+                    UpdateMessageVault(input: inputA, methodhandler: Dummy)
+                    
+                    UpdateMessageVault(input: inputB, methodhandler: Dummy)
+                                
+                    
+                }
+                
+                
+            arrReceivedMessageVaults.remove(at: index)
+                
+                
+                 }
+            if let index = arrReceivedMessageVaults.index(where: { $0.sortKey == sortKey}) {
+                  arrReceivedMessageVaults.remove(at: index)
+                       }
+             
+             if let index = arrSearchReceivedMessageVaults.index(where: { $0.sortKey == sortKey}) {
+                   arrSearchReceivedMessageVaults.remove(at: index)
+                        }
+            DeletePopup.isHidden = true
+
+            receivedCV.reloadData()
+            
+            
+            
+            
+            
+            
+            
+            
         }
         
     }
@@ -175,7 +217,7 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
                                let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: senderimage! + "/" + tempstr, height: Int(imgBtn.frame.height), width: Int(imgBtn.frame.width))
      
               
-                imgBtn.setUserProfileImage(url: profilePicMainurl, profilename: senderimage!)
+                imgBtn.setUserProfileImage(url: myProfileImageURL, profilename: senderimage!)
        
 
               UIView.animate(withDuration: 1.0, animations: { [weak view] in
@@ -197,7 +239,7 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
            let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: (senderimage! + "/" + tempstr).escaped(), height: Int(CoverImage.frame.height), width: Int(CoverImage.frame.width))
 
             
-            CoverImage.setCover(url: profilePicMainurl)
+            CoverImage.setCover(url: myCoverImageURL)
          }
     
     @IBOutlet weak var imgBtn: Button!
@@ -259,7 +301,7 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
     override func viewDidAppear(_ animated: Bool) {
         calendarTbl.reloadData()
         sentCV.reloadData()
-        receivedCV.reloadData()
+      SetDataForReceivedMessages()
     }
     
        @IBAction func DeleteTapped(_ sender: Any) {
@@ -268,26 +310,33 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
        }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        receivedCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
+        sentCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
+        calendarTbl.register(UINib.init(nibName: "CustomCalendarTVC", bundle: nil), forCellReuseIdentifier: "CustomCalendarTVC")
+
         displaySubViewtoParentView(self.view, subview: DeletePopup)
                   DeletePopup.isHidden = true
         self.hideKeyboard()
          username = globalusername
-      downloadcoverimage()
+
+        currentuser = me[0]
+        downloadcoverimage()
                   downloadprofileimage()
-        // Do any additional setup after loading the view.
-        receivedCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
-        sentCV.register(UINib.init(nibName: "CustomVideoCVC", bundle: nil), forCellWithReuseIdentifier: "CustomVideoCVC")
-        calendarTbl.register(UINib.init(nibName: "CustomCalendarTVC", bundle: nil), forCellReuseIdentifier: "CustomCalendarTVC")
-        FetchReceivedMessageVaults(username: username, methodhandler: SetDataForReceivedMessages)
-        FetchMessageVaults(username: username, methodhandler: SetDataForSentMessages)
-        FetchCalendars(username: username, methodhandler: SetTableConstraints)
+         constraintHeightCalendarTbl.constant = CGFloat(60)
+               FetchReceivedMessageVaults(username: username, methodhandler: SetDataForReceivedMessages)
+                FetchMessageVaults(username: username, methodhandler: SetDataForSentMessages)
+             FetchCalendars(username: username, methodhandler: SetTableConstraints)
+        //
         
+
         eventTxtField.delegate = self
               displaySubViewtoParentView(self.view, subview: DateView)
                   DateView.isHidden = true
-             
-                currentuser = me[0]
+
               SetLabels()
+        
+        
             
     }
     
@@ -477,6 +526,65 @@ extension MyVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UICo
               let finaldata : messagevault = arrMessageVaults[indexPath.row]
                let username = finaldata.postedBy
                    let key =  username+"/vaults/" + finaldata.mediaURL
+              if finaldata.postType == "IMAGE"{
+                  let images = [
+                    LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                                  text: "For " + finaldata.receivername + " | Can Be Opened: " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn) + " | " + finaldata.description)
+                  ]
+
+                  // Create an instance of LightboxController.
+                  let controller = LightboxController(images: images)
+
+                  // Set delegates.
+                  controller.pageDelegate = self
+                  controller.dismissalDelegate = self
+
+                  // Use dynamic background.
+                  controller.dynamicBackground = true
+
+                  // Present your controller.
+                  present(controller, animated: true, completion: nil)
+                  
+              } else {
+                  
+                  
+                  let images = [
+                              LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,
+                                             text: "For " + finaldata.receivername + " | " + finaldata.description,
+                                            videoURL: URL(string: API.CLOUDFRONT_URL+"users/"+key.replacingOccurrences(of: ".jpg", with: ".mp4")))
+                            ]
+
+         // Create an instance of LightboxController.
+         let controller = LightboxController(images: images)
+
+         // Set delegates.
+         controller.pageDelegate = self
+         controller.dismissalDelegate = self
+
+         // Use dynamic background.
+         controller.dynamicBackground = true
+
+         // Present your controller.
+         present(controller, animated: true, completion: nil)
+         
+                  
+              }
+              
+             
+
+              
+        } else if collectionView == receivedCV{
+              let finaldata : messagevault = arrReceivedMessageVaults[indexPath.row]
+               let username = finaldata.postedBy
+                   let key =  username+"/vaults/" + finaldata.mediaURL
+            
+            guard Int(finaldata.canBeOpenedOn)! < Int(Date().timeIntervalSince1970) else {
+                displayToast("Can be opened by you on " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn))
+                return
+                   }
+            
+            
+            
               if finaldata.postType == "IMAGE"{
                   let images = [
                     LightboxImage(imageURL: URL(string: API.CLOUDFRONT_URL+"users/"+key)!,

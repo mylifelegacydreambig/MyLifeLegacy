@@ -135,12 +135,15 @@ func UpdatePost(input: PostInput, methodhandler: @escaping MethodHandler){
     appSyncClient?.perform(mutation: UpdatePostMutation(input: input)) { (result, error) in
         if let error = error as? AWSAppSyncClientError {
             print("Error occurred: \(error.localizedDescription )")
+            displayToast("Something went wrong. Please try again.".localized())
         }
         if let resultError = result?.errors {
             print("Error saving the item on server: \(resultError)")
             CreatePost(input: input, methodhandler: methodhandler)
             return
         }
+        
+        displayToast("Your post was updated!".localized())
         methodhandler()
     }
 }
@@ -151,11 +154,14 @@ func CreatePost(input: PostInput, methodhandler: @escaping MethodHandler){
     appSyncClient?.perform(mutation: CreatePostMutation(input: input)) { (result, error) in
         if let error = error as? AWSAppSyncClientError {
             print("Error occurred: \(error.localizedDescription )")
+            displayToast("Something went wrong. Please try again.".localized())
+
         }
         if let resultError = result?.errors {
             print("Error saving the item on server: \(resultError)")
             return
         }
+        displayToast("Your post was created!".localized())
         methodhandler()
     }
 }
@@ -283,6 +289,7 @@ func UpdateMessageVault(input: MessageVaultInput, methodhandler: @escaping Metho
     appSyncClient?.perform(mutation: UpdateMessageVaultMutation(input: input)) { (result, error) in
         if let error = error as? AWSAppSyncClientError {
             print("Error occurred: \(error.localizedDescription )")
+            displayToast("Something went wrong. Please try again.".localized())
         }
         if let resultError = result?.errors {
             print("Creating MessageVault Event")
@@ -290,6 +297,8 @@ func UpdateMessageVault(input: MessageVaultInput, methodhandler: @escaping Metho
             CreateMessageVault(input: input, methodhandler: methodhandler)
             return
         }
+        
+         displayToast("Your message was updated".localized())
         methodhandler()
     }
 }
@@ -300,13 +309,14 @@ func CreateMessageVault(input: MessageVaultInput, methodhandler: @escaping Metho
     appSyncClient?.perform(mutation: CreateMessageVaultMutation(input: input)) { (result, error) in
         if let error = error as? AWSAppSyncClientError {
             print("Error occurred: \(error.localizedDescription )")
+             displayToast("Something went wrong. Please try again.".localized())
         }
         if let resultError = result?.errors {
             print("Error saving the item on server: \(resultError)")
             return
         }
         
-         print("MessageVault Event Created")
+         displayToast("Your message was created".localized())
         methodhandler()
     }
 }
@@ -323,9 +333,82 @@ func DeleteMessageVault(input: DeleteUserInput, methodhandler: @escaping MethodH
             print("Error saving the item on server: \(resultError)")
             return
         }
+        displayToast("Your message was deleted".localized())
+
         methodhandler()
     }
 }
 
 
 
+
+
+
+func UpdateReaction(input: ReactionInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: UpdateReactionMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Creating Reaction Event")
+            
+            CreateReaction(input: input, methodhandler: methodhandler)
+            return
+        }
+        methodhandler()
+    }
+}
+
+func CreateReaction(input: ReactionInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: CreateReactionMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Error saving the item on server: \(resultError)")
+            return
+        }
+        
+         print("Reaction Event Created")
+        methodhandler()
+    }
+}
+
+
+func DeleteReaction(input: ReactionInput, methodhandler: @escaping MethodHandler){
+    defineAppSyncSource()
+
+    appSyncClient?.perform(mutation: DeleteReactionMutation(input: input)) { (result, error) in
+        if let error = error as? AWSAppSyncClientError {
+            print("Error occurred: \(error.localizedDescription )")
+        }
+        if let resultError = result?.errors {
+            print("Error saving the item on server: \(resultError)")
+            return
+        }
+        methodhandler()
+    }
+}
+
+
+
+func CreateTestEvent(input: DeleteUserInput, methodhandler: @escaping MethodHandler){
+  //  defineAppSyncSource()
+
+//    appSyncClient?.perform(mutation: TestEventMutation(input: input)) { (result, error) in
+//        if let error = error as? AWSAppSyncClientError {
+//            print("Error occurred: \(error.localizedDescription )")
+//        }
+//        if let resultError = result?.errors {
+//            print("Error saving the item on server: \(resultError)")
+//            return
+//        }
+//
+//         print("Reaction Event Created")
+//        methodhandler()
+//    }
+}

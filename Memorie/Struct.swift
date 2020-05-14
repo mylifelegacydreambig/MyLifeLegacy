@@ -11,7 +11,6 @@ import Foundation
 
 
 
-
 struct user: Codable, Hashable {
 var primaryKey: String
 var sortKey: String
@@ -45,6 +44,7 @@ var postedBy: String
 var createdAt: String
 var lastEdited: String
 var postType: String
+var comments: String
 }
 
 struct invitation: Codable, Hashable {
@@ -107,3 +107,17 @@ var friend: invitation!
 var arrCalendars: [calendar] = []
 var arrSearchMessageVaults: [messagevault] = []
 var arrSearchReceivedMessageVaults: [messagevault] = []
+
+
+
+struct reaction: Codable, Hashable {
+    var eventId: String
+    var commentId: String
+    var content: String
+    var createdAt: String
+    var reactionType: String
+    var lastEdited: String
+    var reactedBy: String
+    var originalAuthor: String
+}
+

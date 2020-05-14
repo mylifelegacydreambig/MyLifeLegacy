@@ -24,6 +24,7 @@ class CustomLegacyTVC: UITableViewCell {
     @IBOutlet weak var nameLabel: Label!
     @IBOutlet weak var timeLabel: Label!
     
+    @IBOutlet weak var LikeBtnTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var CategoriesLbl: Label!
     @IBOutlet weak var likesLbl: Button!
     
@@ -48,6 +49,7 @@ class CustomLegacyTVC: UITableViewCell {
                let delegate = delegate {
                self.delegate?.CustomLegacyTableViewCell(self, likeButtonTappedFor: like)
            }
+        
        }
     
     
@@ -76,9 +78,13 @@ class CustomLegacyTVC: UITableViewCell {
 //                     }
 //          }
     
+    
+
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+      
         // Initialization code
     }
 

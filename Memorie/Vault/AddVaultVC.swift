@@ -161,12 +161,12 @@ class AddVaultVC: UIViewController, UIGestureRecognizerDelegate,GalleryControlle
         
         arrSearchMessageVaults.append(mymessagevault)
         arrMessageVaults.append(mymessagevault)
-        
+        GoBack()
         DispatchQueue.main.async{
             UpdateMessageVault(input: self.newvaultmessage, methodhandler: Dummy)
             var receivermessagevaultinput: MessageVaultInput = self.newvaultmessage
             receivermessagevaultinput.primaryKey = self.newvaultmessage.receivedBy! + "-received"
-            UpdateMessageVault(input: receivermessagevaultinput, methodhandler: self.GoBack)
+            UpdateMessageVault(input: receivermessagevaultinput, methodhandler: Dummy)
         }
       
     }

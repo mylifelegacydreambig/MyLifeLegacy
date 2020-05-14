@@ -127,6 +127,7 @@
                                     <constraint firstAttribute="height" constant="20" id="Quc-rJ-1eW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="16 Likes" image="like_full">
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -151,13 +152,14 @@
                                             <constraint firstAttribute="height" constant="1" id="9Ft-6k-LY1"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcK-il-DHA">
-                                        <rect key="frame" x="225" y="0.0" width="30" height="40"/>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcK-il-DHA">
+                                        <rect key="frame" x="225" y="8" width="25" height="25"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="KLd-gu-czB"/>
+                                            <constraint firstAttribute="width" constant="25" id="KLd-gu-czB"/>
+                                            <constraint firstAttribute="height" constant="25" id="hnD-s5-1LF"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1764705882" green="0.50588235290000005" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="like"/>
+                                        <state key="normal" image="chat-like-filled"/>
                                         <connections>
                                             <action selector="likeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="stj-An-GDQ"/>
                                         </connections>
@@ -176,16 +178,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="lcK-il-DHA" secondAttribute="bottom" id="6fc-SP-AVy"/>
                                     <constraint firstAttribute="trailing" secondItem="Vc7-rA-UIB" secondAttribute="trailing" constant="10" id="9gm-Gu-HfD"/>
                                     <constraint firstItem="xcP-n9-Mp5" firstAttribute="leading" secondItem="rTI-sd-xUn" secondAttribute="leading" id="E8R-IX-Q6K"/>
-                                    <constraint firstItem="lcK-il-DHA" firstAttribute="top" secondItem="rTI-sd-xUn" secondAttribute="top" id="GGT-48-Xcm"/>
                                     <constraint firstAttribute="height" constant="40" id="OXw-y2-dMU"/>
                                     <constraint firstItem="Vc7-rA-UIB" firstAttribute="top" secondItem="xcP-n9-Mp5" secondAttribute="bottom" id="dUH-GW-yaq"/>
-                                    <constraint firstItem="Vc7-rA-UIB" firstAttribute="leading" secondItem="lcK-il-DHA" secondAttribute="trailing" constant="5" id="fhk-EM-x2h"/>
+                                    <constraint firstItem="lcK-il-DHA" firstAttribute="trailing" secondItem="Vc7-rA-UIB" secondAttribute="trailing" constant="-40" id="fhk-EM-x2h"/>
                                     <constraint firstAttribute="trailing" secondItem="xcP-n9-Mp5" secondAttribute="trailing" id="flV-wd-2Gc"/>
                                     <constraint firstItem="xcP-n9-Mp5" firstAttribute="top" secondItem="rTI-sd-xUn" secondAttribute="top" id="pfk-2s-Bqp"/>
                                     <constraint firstAttribute="bottom" secondItem="Vc7-rA-UIB" secondAttribute="bottom" id="qVY-we-lgg"/>
+                                    <constraint firstItem="lcK-il-DHA" firstAttribute="centerY" secondItem="Vc7-rA-UIB" secondAttribute="centerY" id="v2J-MI-Tof"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -225,6 +226,7 @@
                 <outlet property="CategoriesLbl" destination="WPc-HQ-dSz" id="ach-7U-1zF"/>
                 <outlet property="DescriptionLabel" destination="7bb-xT-1hA" id="sT3-Qv-7E0"/>
                 <outlet property="LikeBtn" destination="lcK-il-DHA" id="jcw-o7-qxO"/>
+                <outlet property="LikeBtnTrailingConstraint" destination="fhk-EM-x2h" id="Bip-at-J1K"/>
                 <outlet property="MoreBtn" destination="Vc7-rA-UIB" id="Cff-N9-RAY"/>
                 <outlet property="imgBtn" destination="GSs-Nz-9Eu" id="7Bn-3s-UDb"/>
                 <outlet property="imgView" destination="m15-Sr-5oD" id="t9d-Qh-1PA"/>
@@ -236,7 +238,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="like" width="20" height="18"/>
+        <image name="chat-like-filled" width="45" height="39"/>
         <image name="like_full" width="13" height="12"/>
         <image name="more_horiz" width="24" height="24"/>
         <image name="temp" width="365.5" height="375"/>

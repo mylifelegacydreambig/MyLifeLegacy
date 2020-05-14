@@ -65,13 +65,30 @@ class SignInControllerDecision: UIViewController {
         self.user?.signOut()
         self.title = nil
         self.response = nil
-        
+        ClearArrays()
         self.refresh()
         
 
         
     }
    
+    
+    
+    
+    func ClearArrays(){
+        me.removeAll()
+        arrPosts.removeAll()
+        arrUsers.removeAll()
+        arrMessageVaults.removeAll()
+        arrInvitations.removeAll()
+        arrReceivedMessageVaults.removeAll()
+        arrUserPosts.removeAll()
+        arrSearchUserPosts.removeAll()
+        arrCalendars.removeAll()
+        arrSearchMessageVaults.removeAll()
+        arrSearchReceivedMessageVaults.removeAll()
+
+    }
     
     func refresh() {
         self.user?.getDetails().continueOnSuccessWith { (task) -> AnyObject? in

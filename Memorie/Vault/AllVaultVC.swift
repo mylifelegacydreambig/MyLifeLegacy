@@ -336,14 +336,14 @@ class ReceivedVaultVC: UIViewController, UITextFieldDelegate,LightboxControllerP
                let finaldata: messagevault = arrMessages[index]
             DispatchQueue.main.async{
               
-                let inputA: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.postedBy+"-sent", sortKey: finaldata.sortKey)
+                let inputA: MessageVaultInput = MessageVaultInput(primaryKey: finaldata.postedBy+"-sent", sortKey: finaldata.sortKey, isLocked: true)
                 
-                let inputB: DeleteUserInput = DeleteUserInput(primaryKey: finaldata.receivedBy+"-received", sortKey: finaldata.sortKey)
+                let inputB: MessageVaultInput = MessageVaultInput(primaryKey: finaldata.receivedBy+"-received", sortKey: finaldata.sortKey, isLocked: true)
                 
                 
-                DeleteMessageVault(input: inputA, methodhandler: Dummy)
+                UpdateMessageVault(input: inputA, methodhandler: Dummy)
                 
-                DeleteMessageVault(input: inputB, methodhandler: Dummy)
+                UpdateMessageVault(input: inputB, methodhandler: Dummy)
                             
                 
             }
@@ -430,11 +430,13 @@ func lightboxController(_ controller: LightboxController, didMoveToPage page: In
             
          arrMessages = arrSearchReceivedMessageVaults
             arrMessages = arrMessages.unique()
+            arrMessages = arrMessages.filter { $0.isLocked == false }
                 vaultCV.reloadData()
         } else {
         
          arrMessages = arrReceivedMessageVaults
             arrMessages = arrMessages.unique()
+            arrMessages = arrMessages.filter { $0.isLocked == false }
          vaultCV.reloadData()
             
         }
@@ -529,6 +531,14 @@ extension ReceivedVaultVC : UICollectionViewDelegate, UICollectionViewDataSource
         
         print("TAPPING")
            let finaldata : messagevault = arrMessages[indexPath.row]
+        guard Int(finaldata.canBeOpenedOn)! < Int(Date().timeIntervalSince1970) else {
+            displayToast("Can be opened by you on " + TimeExtractorForChat(timestamp: finaldata.canBeOpenedOn))
+            return
+               }
+        
+        
+        
+        
            let username = finaldata.postedBy
             let key =  username+"/vaults/" + finaldata.mediaURL
         

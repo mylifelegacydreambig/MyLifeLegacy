@@ -71,7 +71,7 @@ var Token_arrPosts: String!
 func FetchPosts(username: String, methodhandler: @escaping MethodHandler){
     defineAppSyncSource()
     Token_arrPosts = " "
-    appSyncClient?.fetch(query: FetchPostsQuery(PrimaryKey: username+"-post", limit: 100), cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+    appSyncClient?.fetch(query: FetchPostsQuery(PrimaryKey: username+"-post", limit: 100), cachePolicy: .fetchIgnoringCacheData)  { (result, error) in
         
       if error != nil {
             print(error?.localizedDescription ?? "")
@@ -88,7 +88,12 @@ func FetchPosts(username: String, methodhandler: @escaping MethodHandler){
         
         
         for each in (result?.data?.fetchPosts?.items)!{
-            print("SAVED WORDS DID WORK!")
+            
+            var comment: String! = "default"
+            if let mycoment = (each?.comments?.commentId){
+                comment = mycoment
+                print(comment)
+            }
             
     arrPosts.append(post(primaryKey: (each?.primaryKey)!,
                                                                sortKey: (each?.sortKey)!,
@@ -101,9 +106,9 @@ func FetchPosts(username: String, methodhandler: @escaping MethodHandler){
                                                                postedBy: (each?.postedBy)!,
                                                                createdAt: (each?.createdAt)!,
                                                                lastEdited: (each?.lastEdited)!,
-                                                               postType: (each?.postType)!))
-                           
-        
+                                                               postType: (each?.postType)!,
+                                                               comments: comment))
+           
         }
         
         Token_arrPosts = result?.data?.fetchPosts?.nextToken
@@ -142,7 +147,10 @@ func FetchPostsNext( username: String, methodhandler: @escaping MethodHandler){
         print("NEXT TOKEN")
         
           for each in (result?.data?.fetchPosts?.items)!{
-                  
+                  var comment: String! = "default"
+                        if let mycoment = (each?.comments?.commentId){
+                            comment = mycoment
+                        }
                  arrPosts.append(post(primaryKey: (each?.primaryKey)!,
                                                       sortKey: (each?.sortKey)!,
                                                       mediaURL: (each?.mediaUrl)!,
@@ -154,7 +162,8 @@ func FetchPostsNext( username: String, methodhandler: @escaping MethodHandler){
                                                       postedBy: (each?.postedBy)!,
                                                       createdAt: (each?.createdAt)!,
                                                       lastEdited: (each?.lastEdited)!,
-                                                      postType: (each?.postType)!))
+                                                      postType: (each?.postType)!,
+                                                      comments: comment))
                   
               }
         
@@ -188,8 +197,13 @@ func SearchPosts(username: String, searchString: String, methodhandler: @escapin
         
         for each in (result?.data?.searchPosts?.items)!{
             print("SAVED WORDS DID WORK!")
-            
-              arrSearchUserPosts.append(post(primaryKey: (each?.primaryKey)!,
+
+            var comment: String! = "default"
+                  if let mycoment = (each?.comments?.commentId){
+                      comment = mycoment
+                      print(comment)
+                  }
+            arrSearchUserPosts.append(post(primaryKey: (each?.primaryKey)!,
                                                 sortKey: (each?.sortKey)!,
                                                 mediaURL: (each?.mediaUrl)!,
                                                 description: (each?.description)!,
@@ -200,7 +214,8 @@ func SearchPosts(username: String, searchString: String, methodhandler: @escapin
                                                 postedBy: (each?.postedBy)!,
                                                 createdAt: (each?.createdAt)!,
                                                 lastEdited: (each?.lastEdited)!,
-                                                postType: (each?.postType)!))
+                                                postType: (each?.postType)!,
+                                                comments: comment))
             
   
         
@@ -241,7 +256,11 @@ func SearchPostsNext(username: String, searchString: String, methodhandler: @esc
         print("NEXT TOKEN")
         
           for each in (result?.data?.searchPosts?.items)!{
-                  
+                  var comment: String! = "default"
+                                if let mycoment = (each?.comments?.commentId){
+                                    comment = mycoment
+                                    print(comment)
+                                }
                arrSearchUserPosts.append(post(primaryKey: (each?.primaryKey)!,
                   sortKey: (each?.sortKey)!,
                   mediaURL: (each?.mediaUrl)!,
@@ -253,7 +272,8 @@ func SearchPostsNext(username: String, searchString: String, methodhandler: @esc
                   postedBy: (each?.postedBy)!,
                   createdAt: (each?.createdAt)!,
                   lastEdited: (each?.lastEdited)!,
-                  postType: (each?.postType)!))
+                  postType: (each?.postType)!,
+                  comments: comment))
                   
               }
         
@@ -650,6 +670,9 @@ func FetchMessageVaultsNext( username: String, methodhandler: @escaping MethodHa
         Token_arrMessageVaults = result?.data?.fetchMessageVaults?.nextToken
         print("NEXT TOKEN")
         
+        
+        
+        
           for each in (result?.data?.fetchMessageVaults?.items)!{
                   
               arrMessageVaults.append(messagevault(primaryKey: (each?.postType)!,
@@ -978,4 +1001,27 @@ func SearchReceivedMessageVaultsNext( username: String, searchstring: String, me
         
     }
     
+}
+
+
+
+
+func GetPost(){
+
+    defineAppSyncSource()
+    appSyncClient?.fetch(query: GetPostQuery(PrimaryKey: globalusername+"-post", SortKey: "abhi@uplancer.io2020-05-08T00:40:22.073"),
+                         cachePolicy: .returnCacheDataAndFetch)  { (result, error) in
+        if error != nil {
+            let string = error!.localizedDescription.description
+            print(string)
+            return
+        }
+        
+        guard(result?.data?.snapshot.first?.value != nil) else {
+            return
+        }
+        
+                            
+        
+    }
 }

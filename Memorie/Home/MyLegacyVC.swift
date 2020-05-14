@@ -20,7 +20,7 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
     var currentmessagevault: messagevault!
     var sortKey: String!
     
-    
+    var animateIndexPaths = Set<IndexPath>()
       func Delete(){
                       
           if let index = currentPosts.index(where: { $0.sortKey == sortKey}) {
@@ -39,7 +39,7 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
            
           
           DeletePopup.isHidden = true
-
+            
           tblView.reloadData()
       }
         
@@ -47,16 +47,16 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
                   
                   let finaldata: post = arrPosts[index]
                               DispatchQueue.main.async{
-                                
                                               
                                   arrPosts.remove(at: index)
+                                self.SetFilter()
                            }
-                 
-                
+
 
             }
         
-        
+         SetFilter()
+       
     }
     
     @IBAction func DeleteTapped(_ sender: Any) {
@@ -74,9 +74,60 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
         sortKey = youtuber
     }
     
+    //var selectedpost: post!
     func CustomLegacyTableViewCell(_ youtuberTableViewCell: CustomLegacyTVC, likeButtonTappedFor like: String) {
-     //   CreateReaction(input: input, methodhandler: FinishLiking)
+        
+     
+        if let index = arrPosts.index(where: { $0.sortKey == like}) {
+
+            
+            if arrPosts[index].comments == globalusername {
+                arrPosts[index].comments = "n/a"
+                let like: Int =  arrPosts[index].likes - 1
+                if like < 0 {
+                      arrPosts[index].likes = 0
+                } else {
+                    arrPosts[index].likes = like
+                }
+                
+                
+                    let input: ReactionInput = ReactionInput(eventId: arrPosts[index].sortKey, commentId: globalusername)
+                
+                let postinput: PostInput = PostInput(primaryKey: arrPosts[index].primaryKey, sortKey: arrPosts[index].sortKey, likes: arrPosts[index].likes)
+                
+                    UpdatePost(input: postinput, methodhandler: Dummy)
+                    DeleteReaction(input: input, methodhandler: Dummy)
+            } else {
+                arrPosts[index].comments = globalusername
+                arrPosts[index].likes = arrPosts[index].likes + 1
+                
+                    let input: ReactionInput = ReactionInput(eventId: arrPosts[index].sortKey, commentId: globalusername, content: "LIKE", createdAt: Date().SQL(), reactionType: "LIKE", lastEdited: Date().SQL(), reactedBy: globalusername, originalAuthor: arrPosts[index].postedBy)
+                    
+                    CreateReaction(input: input, methodhandler: Dummy)
+                let postinput: PostInput = PostInput(primaryKey: arrPosts[index].primaryKey, sortKey: arrPosts[index].sortKey, likes: arrPosts[index].likes, lastEdited: String(Int(Date().timeIntervalSince1970)))
+                UpdatePost(input: postinput, methodhandler: Dummy)
+
+            }
+            
+                    SetFilter()
+            
+                   }
+         
     }
+    
+    @IBOutlet weak var RefreshBtn: UIButton!
+    
+    @IBAction func Refresh(_ sender: Any) {
+        displayToast("Refreshing")
+        isViewingMyProfile = true
+        username = currentuser.primaryKey
+        LoadPosts()
+        SetLabels()
+        downloadprofileimage()
+        downloadcoverimage()
+    }
+    
+ 
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
     }
@@ -103,7 +154,7 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
                                let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: senderimage! + "/" + tempstr, height: Int(imgBtn.frame.height), width: Int(imgBtn.frame.width))
      
               
-                imgBtn.setUserProfileImage(url: profilePicMainurl, profilename: senderimage!)
+                imgBtn.setUserProfileImage(url: myProfileImageURL, profilename: senderimage!)
        
 
               UIView.animate(withDuration: 1.0, animations: { [weak view] in
@@ -125,7 +176,7 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
            let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: (senderimage! + "/" + tempstr).escaped(), height: Int(CoverImage.frame.height), width: Int(CoverImage.frame.width))
 
             
-            CoverImage.setCover(url: profilePicMainurl)
+            CoverImage.setCover(url: myCoverImageURL)
          }
     
     @IBOutlet weak var imgBtn: Button!
@@ -182,6 +233,7 @@ class MyLegacyVC: UIViewController, LightboxControllerPageDelegate, LightboxCont
     }
     
     @IBAction func clickToSearch(_ sender: Any) {
+        searchusername = globalusername
         let vc : SearchMyLegacyVC = STORYBOARD.HOME.instantiateViewController(withIdentifier: "SearchMyLegacyVC") as! SearchMyLegacyVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -203,6 +255,13 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
       }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if currentPosts.count > 0 {
+            RefreshBtn.isHidden = true
+        } else {
+            RefreshBtn.isHidden = false
+        }
+        
+    
         return currentPosts.count
     }
     
@@ -215,6 +274,16 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
         guard indexPath.row < currentPosts.count else {
             return UITableViewCell()
         }
+        
+        
+        if !animateIndexPaths.contains(indexPath) {
+            UIView.animate(withDuration: 0.5, animations: {
+                       //do your animation
+                   }, completion: { (stop:Bool) in
+                       self.animateIndexPaths.insert(indexPath)
+               })
+           }
+        
         
         let cell : CustomLegacyTVC = tblView.dequeueReusableCell(withIdentifier: "CustomLegacyTVC") as! CustomLegacyTVC
         let finaldata : post = currentPosts[indexPath.row]
@@ -231,22 +300,33 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
              
         cell.imgView.setImageFromURL(url: url)
         cell.nameLabel.text = finaldata.postedBy
-        cell.timeLabel.text = TimeExtractor(timestamp: finaldata.lastEdited)
+        cell.timeLabel.text = TimeExtractor(timestamp: finaldata.createdAt)
         cell.likesLbl.setTitle(String(finaldata.likes) + " Likes", for: .normal)
-        
+       
         if finaldata.description == "n/a" {
             cell.DescriptionLabel.text = " "
         } else {
            cell.DescriptionLabel.text = finaldata.description
         }
         
+        if finaldata.comments == globalusername {
+            cell.LikeBtn.setImage(UIImage(named:"chat-like-filled"), for: .normal)
+            cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+        } else {
+            cell.LikeBtn.setImage(UIImage(named:"chat-like"), for: .normal)
+            cell.LikeBtn.imageView?.contentMode = .scaleAspectFit
+        }
+        
+       
         cell.CategoriesLbl.text = finaldata.categories.replacingOccurrences(of: ",", with: " #").lowercased()
         cell.CategoriesLbl.text = "#"+cell.CategoriesLbl.text!
         cell.selectionStyle = .none
         
         cell.delegate = self
         cell.youtuber = finaldata.sortKey
-        cell.like = globalusername
+        cell.like = finaldata.sortKey
+        
+        
         return cell
     }
     

@@ -15,7 +15,8 @@ import AVKit
 
 var isMyProfile: Bool = true
 var isProfileImage: Bool = false
-
+var myProfileImageURL: String!
+var myCoverImageURL: String!
 
 class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDelegate, LightboxControllerDismissalDelegate {
     @IBAction func EditProfileTapped(_ sender: Any) {
@@ -36,6 +37,10 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
     func SetLabels(){
         nameLabel.text = me[0].firstName
     }
+    @IBAction func SignOutTapped(_ sender: Any) {
+   self.navigationController?.popViewController(animated: true)
+
+    }
     
      func downloadcoverimage() {
          CoverImage.image = UIImage(named:"cover")
@@ -47,7 +52,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
 
         let profilePicMainurl = AppDelegate().sharedDelegate().ImageURL(folder: "users", key: (senderimage! + "/" + tempstr).escaped(), height: Int(CoverImage.frame.height), width: Int(CoverImage.frame.width))
 
-         
+        myCoverImageURL = profilePicMainurl
+        
          CoverImage.setCover(url: profilePicMainurl)
       }
     
@@ -171,6 +177,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
            ChooseImage()
        }
     
+    
+    
      func downloadprofileimage() {
          let senderimage = username
                                let tempstr: String = senderimage! + "-profile.jpg"
@@ -181,7 +189,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
               
                 imgBtn.setUserProfileImage(url: profilePicMainurl, profilename: senderimage!)
        
-
+myProfileImageURL = profilePicMainurl
               UIView.animate(withDuration: 1.0, animations: { [weak view] in
                                      self.imgBtn.alpha = 1
                                              })
@@ -205,8 +213,14 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
                        CoverImage.addGestureRecognizer(tap)
          }
     
+    override func viewDidAppear(_ animated: Bool) {
+        SetLabels()
+        arrPosts.removeAll()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+     
         addTapGesture()
         CoverImage.bringSubviewToFront(CoverImage)
         username = globalusername

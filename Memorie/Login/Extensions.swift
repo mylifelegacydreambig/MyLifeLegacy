@@ -382,3 +382,9 @@ extension Sequence where Iterator.Element: Hashable {
         return self.filter { alreadyAdded.insert($0).inserted }
     }
 }
+
+
+var arrCategory = ["TRAVEL",
+                   "COOKING",
+                   "MOVIE",
+                   "READING"]
