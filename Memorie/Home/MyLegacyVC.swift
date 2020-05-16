@@ -353,9 +353,10 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
 
             // Use dynamic background.
             controller.dynamicBackground = true
-
+    controller.modalPresentationStyle = .fullScreen
+            
             // Present your controller.
-            present(controller, animated: true, completion: nil)
+            self.present(controller, animated: false)
             
         } else {
             
@@ -375,9 +376,9 @@ extension MyLegacyVC : UITableViewDelegate, UITableViewDataSource {
 
    // Use dynamic background.
    controller.dynamicBackground = true
-
+    controller.modalPresentationStyle = .fullScreen
    // Present your controller.
-   present(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
    
             
         }

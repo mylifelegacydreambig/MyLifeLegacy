@@ -117,7 +117,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate,GalleryControllerDel
                     if let tempPath = tempPath {
                         let controller = AVPlayerViewController()
                         controller.player = AVPlayer(url: tempPath)
-                        
+                        controller.modalPresentationStyle = .fullScreen
                         self.present(controller, animated: true, completion: nil)
                     }
                 }

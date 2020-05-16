@@ -259,6 +259,7 @@ extension SentVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
 
                // Use dynamic background.
                controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
                // Present your controller.
                present(controller, animated: true, completion: nil)
@@ -281,6 +282,7 @@ extension SentVaultVC : UICollectionViewDelegate, UICollectionViewDataSource, UI
 
       // Use dynamic background.
       controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
       // Present your controller.
       present(controller, animated: true, completion: nil)
@@ -559,6 +561,7 @@ extension ReceivedVaultVC : UICollectionViewDelegate, UICollectionViewDataSource
 
                // Use dynamic background.
                controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
                // Present your controller.
                present(controller, animated: true, completion: nil)
@@ -581,6 +584,7 @@ extension ReceivedVaultVC : UICollectionViewDelegate, UICollectionViewDataSource
 
       // Use dynamic background.
       controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
       // Present your controller.
       present(controller, animated: true, completion: nil)

@@ -314,6 +314,7 @@ extension FriendProfileVC : UITableViewDelegate, UITableViewDataSource {
 
              // Use dynamic background.
              controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
              // Present your controller.
              present(controller, animated: true, completion: nil)
@@ -336,6 +337,7 @@ extension FriendProfileVC : UITableViewDelegate, UITableViewDataSource {
 
     // Use dynamic background.
     controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
 
     // Present your controller.
     present(controller, animated: true, completion: nil)
